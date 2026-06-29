@@ -65,7 +65,8 @@ class Eagle6DropDownReceiver(
             settings = settings,
             selfLocation = { selfPoint },
             onPickLocation = { prompt, cb -> startPicker(prompt, cb) },
-            onLaunch = { mission -> launchMission(mission) }
+            onLaunch = { mission -> launchMission(mission) },
+            onCancel = { onBackButtonPressed() }
         )
     }
 

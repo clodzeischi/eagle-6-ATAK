@@ -22,7 +22,8 @@ class NewMissionView(
     private val settings: Eagle6Settings,
     private val selfLocation: () -> GeoPoint,
     private val onPickLocation: (prompt: String, callback: (GeoPoint) -> Unit) -> Unit,
-    private val onLaunch: (Mission) -> Unit
+    private val onLaunch: (Mission) -> Unit,
+    private val onCancel: () -> Unit
 ) {
     val view: View = PluginLayoutInflater.inflate(pluginContext, R.layout.eagle6_new_mission, null)
 
@@ -67,6 +68,7 @@ class NewMissionView(
             }
         }
         view.findViewById<Button>(R.id.btn_launch).setOnClickListener { attemptLaunch() }
+        view.findViewById<Button>(R.id.btn_cancel).setOnClickListener { onCancel() }
     }
 
     fun refresh() {
