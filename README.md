@@ -1,35 +1,36 @@
-(Plugin Name)
+# Eagle-6
+_________________________________________________________________
+## PURPOSE AND CAPABILITIES
+The purpose of this plugin is to facilitate UAS operations planning and reporting.
 
+The primary audience is any organization, engaged in UAS operations in the National Airspace. The
+user can plan the UAS operation and communicate intent to others on the TAK server to minimize the
+risk of air-to-air collisions with manned aircraft.
 
 _________________________________________________________________
-PURPOSE AND CAPABILITIES
-
-(General Description)
-
+## STATUS
+Currently, in early development.
 
 _________________________________________________________________
-STATUS
-
-(In Progress?  Expected release?  Released?  To Who?  When?)
-
-_________________________________________________________________
-POINT OF CONTACTS
-
-(Who is developing this)
+## POINT OF CONTACTS
+Lead dev: Constantin Lodzeischi.
 
 _________________________________________________________________
-PORTS REQUIRED
-
-(This is important for ATO, networking, and other security concerns)
-
-_________________________________________________________________
-EQUIPMENT REQUIRED
+## PORTS REQUIRED
+This plugin requires a secure connection to a TAK server.
 
 _________________________________________________________________
-EQUIPMENT SUPPORTED
+## EQUIPMENT REQUIRED
+The primary platform for this plugin is U.S. Army NETT WARRIOR Galaxy EUD, and AIR WARRIOR tablet,
+running ATAK 5.5
 
 _________________________________________________________________
-COMPILATION
+## EQUIPMENT SUPPORTED
+Any Android device running APK 29 or newer, and ATAK 5.5.
 
 _________________________________________________________________
-DEVELOPER NOTES
+## COMPILATION
+Requires the TAK.GOV SDK, or TAK.GOV credentials in local.properties.
+
+_________________________________________________________________
+## DEVELOPER NOTES
