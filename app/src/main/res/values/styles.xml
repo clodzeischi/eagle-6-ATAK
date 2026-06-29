@@ -122,5 +122,41 @@
         <item name="android:textSize">@dimen/fontSize</item>
     </style>
 
+    <!-- Eagle-6 styles -->
+    <style name="E6Label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/e6_text_secondary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+
+    <style name="E6Value">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/e6_text_primary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="E6Spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:background">@color/e6_surface</item>
+    </style>
+
+    <style name="E6IconBtn" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">52dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:background">@drawable/btn_secondary</item>
+        <item name="android:textColor">@color/e6_text_secondary</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+    </style>
 
 </resources>

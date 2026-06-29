@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <!-- Brand -->
+    <color name="e6_blue">#4FC3F7</color>
+    <color name="e6_orange">#FF8A65</color>
+
+    <!-- Surfaces -->
+    <color name="e6_bg">#121212</color>
+    <color name="e6_surface">#1E1E1E</color>
+    <color name="e6_divider">#2C2C2C</color>
+
+    <!-- Text -->
+    <color name="e6_text_primary">#EEEEEE</color>
+    <color name="e6_text_secondary">#9E9E9E</color>
+
+    <!-- Button fills -->
+    <color name="e6_btn_primary">#1565C0</color>
+    <color name="e6_btn_warning">#E64A19</color>
+    <color name="e6_btn_secondary">#2A2A2A</color>
+
+    <!-- Keep existing names in case anything references them -->
     <color name="white">#ffffff</color>
     <color name="darker_gray">#121212</color>
     <color name="heading_yellow">#dfb228</color>
-
 </resources>

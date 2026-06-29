@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/e6_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NEW MISSION"
+            android:textColor="@color/e6_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Pilot -->
+        <TextView style="@style/E6Label" android:text="PILOT"/>
+        <Spinner android:id="@+id/spin_pilot" style="@style/E6Spinner"/>
+
+        <!-- Platform -->
+        <TextView style="@style/E6Label" android:text="PLATFORM"/>
+        <Spinner android:id="@+id/spin_platform" style="@style/E6Spinner"/>
+
+        <!-- Mission type -->
+        <TextView style="@style/E6Label" android:text="MISSION TYPE"/>
+        <Spinner android:id="@+id/spin_mission_type" style="@style/E6Spinner"/>
+
+        <!-- Launch location -->
+        <TextView style="@style/E6Label" android:text="LAUNCH LOCATION"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+            <TextView
+                android:id="@+id/txt_launch_mgrs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/e6_text_primary"
+                android:textSize="13sp"
+                android:fontFamily="monospace"/>
+            <Button android:id="@+id/btn_pick_launch" style="@style/E6IconBtn" android:text="MAP"/>
+            <Button android:id="@+id/btn_reset_launch" style="@style/E6IconBtn" android:text="SELF"/>
+        </LinearLayout>
+
+        <!-- Waypoints -->
+        <TextView style="@style/E6Label" android:text="WAYPOINTS (optional)"/>
+        <LinearLayout
+            android:id="@+id/waypoints_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+        <Button
+            android:id="@+id/btn_add_waypoint"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="+ ADD WAYPOINT"
+            android:textSize="11sp"
+            android:background="@drawable/btn_secondary"
+            android:textColor="@color/e6_text_secondary"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Activity location -->
+        <TextView style="@style/E6Label" android:text="ACTIVITY LOCATION"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+            <TextView
+                android:id="@+id/txt_activity_mgrs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/e6_text_primary"
+                android:textSize="13sp"
+                android:fontFamily="monospace"/>
+            <Button android:id="@+id/btn_pick_activity" style="@style/E6IconBtn" android:text="MAP"/>
+            <Button android:id="@+id/btn_reset_activity" style="@style/E6IconBtn" android:text="SELF"/>
+        </LinearLayout>
+
+        <!-- Altitude -->
+        <TextView style="@style/E6Label" android:text="ALTITUDE (ft AGL)"/>
+        <Spinner android:id="@+id/spin_altitude" style="@style/E6Spinner"/>
+
+        <!-- Duration -->
+        <TextView style="@style/E6Label" android:text="EXPECTED DURATION (min)"/>
+        <EditText
+            android:id="@+id/edit_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/e6_text_primary"
+            android:backgroundTint="@color/e6_divider"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Launch -->
+        <Button
+            android:id="@+id/btn_launch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="LAUNCH"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/btn_primary"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+</ScrollView>

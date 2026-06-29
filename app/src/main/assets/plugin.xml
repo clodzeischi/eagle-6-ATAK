@@ -4,7 +4,7 @@
 
     <extension
         type="gov.tak.api.plugin.IPlugin"
-        impl="com.atakmap.android.eagle6.Eagle6"
+        impl="com.atakmap.android.eagle6.Eagle6Plugin"
         singleton="true" />
 
 </plugin>

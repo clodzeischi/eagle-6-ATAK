@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/e6_bg"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MISSION"
+        android:textColor="@color/e6_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.1"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Status badge -->
+    <TextView
+        android:id="@+id/detail_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/e6_blue"
+        android:background="@color/e6_surface"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Info rows -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginBottom="8dp">
+        <TextView style="@style/E6Label" android:text="PILOT" android:layout_width="80dp"/>
+        <TextView android:id="@+id/detail_pilot" style="@style/E6Value"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginBottom="8dp">
+        <TextView style="@style/E6Label" android:text="PLATFORM" android:layout_width="80dp"/>
+        <TextView android:id="@+id/detail_platform" style="@style/E6Value"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginBottom="8dp">
+        <TextView style="@style/E6Label" android:text="TYPE" android:layout_width="80dp"/>
+        <TextView android:id="@+id/detail_type" style="@style/E6Value"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginBottom="20dp">
+        <TextView style="@style/E6Label" android:text="ACTIVITY" android:layout_width="80dp"/>
+        <TextView android:id="@+id/detail_activity_mgrs" style="@style/E6Value"
+            android:fontFamily="monospace"/>
+    </LinearLayout>
+
+    <!-- View divider -->
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="@color/e6_divider" android:layout_marginBottom="16dp"/>
+
+    <!-- Actions -->
+    <Button
+        android:id="@+id/btn_primary_action"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/btn_primary"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Retask type row -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:id="@+id/row_retask_type">
+        <Spinner
+            android:id="@+id/spin_retask_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/btn_retask_type"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="RETASK TYPE"
+            android:textSize="11sp"
+            android:background="@drawable/btn_secondary"
+            android:textColor="@color/e6_text_secondary"
+            android:visibility="gone"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_retask_location"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="RETASK LOCATION"
+        android:textSize="12sp"
+        android:background="@drawable/btn_secondary"
+        android:textColor="@color/e6_text_secondary"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btn_rth"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="RTH"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/btn_warning"
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
+
+</LinearLayout>

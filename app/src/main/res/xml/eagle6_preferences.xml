@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Personnel">
+        <Preference
+            android:key="pref_pilots"
+            android:title="Pilots"
+            android:summary="Tap to manage pilot list"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Aircraft">
+        <Preference
+            android:key="pref_platforms"
+            android:title="Platforms"
+            android:summary="Tap to manage platform list"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Operations">
+        <Preference
+            android:key="pref_mission_types"
+            android:title="Mission Types"
+            android:summary="Tap to manage mission type list"/>
+
+        <Preference
+            android:key="pref_altitudes"
+            android:title="Altitudes (ft AGL)"
+            android:summary="Tap to manage altitude list"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Zones">
+        <EditTextPreference
+            android:key="pref_launch_radius"
+            android:title="Launch/Recovery Zone Radius (m)"
+            android:summary="10–100 m. Shown as pulsating circle on map."
+            android:inputType="number"
+            android:defaultValue="50"/>
+
+        <EditTextPreference
+            android:key="pref_activity_radius"
+            android:title="Activity Zone Radius (m)"
+            android:summary="100–1000 m. Shown as static circle on map."
+            android:inputType="number"
+            android:defaultValue="300"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Communications">
+        <Preference
+            android:key="pref_chat_rooms"
+            android:title="TAK Chat Rooms"
+            android:summary="Tap to select rooms for log messages"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Logs">
+        <Preference
+            android:key="pref_export_logs"
+            android:title="Export Logs"
+            android:summary="Copy eagle6.log to device storage"/>
+
+        <Preference
+            android:key="pref_erase_logs"
+            android:title="Erase Logs"
+            android:summary="Delete all local log entries"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

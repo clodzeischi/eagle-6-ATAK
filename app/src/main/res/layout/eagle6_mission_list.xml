@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/e6_bg">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="@color/e6_surface"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EAGLE-6"
+            android:textColor="@color/e6_blue"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"/>
+
+        <Button
+            android:id="@+id/btn_new_mission"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="NEW MISSION"
+            android:textSize="11sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="@drawable/btn_primary"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="SETTINGS"
+            android:textSize="11sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="@drawable/btn_secondary"
+            android:textColor="@color/e6_text_secondary"/>
+
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="@color/e6_divider"/>
+
+    <!-- Scrollable mission list -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/empty_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="no active missions"
+                android:textColor="@color/e6_text_secondary"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="32dp"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/missions_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
