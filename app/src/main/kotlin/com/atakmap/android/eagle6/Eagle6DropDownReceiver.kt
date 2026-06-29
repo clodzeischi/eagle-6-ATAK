@@ -16,6 +16,7 @@ import com.atakmap.android.eagle6.model.MissionStore
 import com.atakmap.android.eagle6.ui.LandingView
 import com.atakmap.android.eagle6.ui.MissionDetailView
 import com.atakmap.android.eagle6.ui.MissionListView
+import com.atakmap.android.eagle6.settings.Eagle6PreferenceFragment
 import com.atakmap.android.eagle6.ui.NewMissionView
 import com.atakmap.android.ipc.AtakBroadcast
 import com.atakmap.android.maps.MapView
@@ -129,9 +130,10 @@ class Eagle6DropDownReceiver(
     // ---- Settings ----
 
     private fun openSettings() {
+        closeDropDown()
         AtakBroadcast.getInstance().sendBroadcast(
-            Intent("com.atakmap.app.SETTINGS_OPEN")
-                .putExtra("toolPref", com.atakmap.android.eagle6.settings.Eagle6PreferenceFragment.PREF_KEY)
+            Intent("com.atakmap.app.ADVANCED_SETTINGS")
+                .putExtra("toolkey", Eagle6PreferenceFragment.PREF_KEY)
         )
     }
 
