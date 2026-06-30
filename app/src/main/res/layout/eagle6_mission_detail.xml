@@ -81,9 +81,11 @@
         android:id="@+id/row_retask_type">
         <Spinner
             android:id="@+id/spin_retask_type"
+            style="@style/E6Spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginBottom="0dp"
             android:visibility="gone"/>
         <Button
             android:id="@+id/btn_retask_type"

@@ -10,7 +10,7 @@ import com.atakmap.android.eagle6.chat.ChatSender
 import com.atakmap.android.eagle6.cot.CotBuilder
 import com.atakmap.android.eagle6.cot.MessageFormatter
 import com.atakmap.android.eagle6.map.LocationPickerTool
-import com.atakmap.android.eagle6.model.Eagle6Settings
+import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.android.eagle6.model.MissionStore
 import com.atakmap.android.eagle6.ui.LandingView
@@ -32,7 +32,6 @@ class Eagle6DropDownReceiver(
         const val SHOW_PLUGIN = "com.atakmap.android.eagle6.SHOW_PLUGIN"
     }
 
-    private val settings = Eagle6Settings(pluginContext)
     private val selfUid get() = mapView.selfMarker?.uid ?: "unknown"
     private val selfCallsign get() = mapView.selfMarker?.getMetaString("callsign", "UNKNOWN") ?: "UNKNOWN"
 
@@ -63,7 +62,6 @@ class Eagle6DropDownReceiver(
     private val newMissionView: NewMissionView by lazy {
         NewMissionView(
             pluginContext = pluginContext,
-            settings = settings,
             selfLocation = { selfPoint },
             onPickLocation = { prompt, cb -> startPicker(prompt, cb) },
             onLaunch = { mission -> launchMission(mission) },
@@ -74,7 +72,6 @@ class Eagle6DropDownReceiver(
     private val missionDetailView: MissionDetailView by lazy {
         MissionDetailView(
             pluginContext = pluginContext,
-            settings = settings,
             onPickLocation = { prompt, cb -> startPicker(prompt, cb) },
             onMissionUpdated = { mission, message -> onMissionStatusChanged(mission, message) },
             onRth = { mission ->
@@ -161,7 +158,7 @@ class Eagle6DropDownReceiver(
             launchMgrs, actMgrs, mission.altitudeFt
         )
         dispatchCot(mission, mission.launchLocation, message, "LAUNCH")
-        chatSender.sendToRooms(message, settings.chatRooms)
+        chatSender.sendToRooms(message, Eagle6Prefs.chatRooms)
         logEntry(message)
 
         missionDetailView.bind(mission)
@@ -173,7 +170,7 @@ class Eagle6DropDownReceiver(
         val location = mission.activityLocation
         val tag = mission.status.name
         dispatchCot(mission, location, message, tag)
-        chatSender.sendToRooms(message, settings.chatRooms)
+        chatSender.sendToRooms(message, Eagle6Prefs.chatRooms)
         logEntry(message)
     }
 
@@ -183,7 +180,7 @@ class Eagle6DropDownReceiver(
             mission.pilot, mission.platform, landMgrs, mission.missionType
         )
         dispatchCot(mission, landingPoint, message, "LAND")
-        chatSender.sendToRooms(message, settings.chatRooms)
+        chatSender.sendToRooms(message, Eagle6Prefs.chatRooms)
         logEntry(message)
 
         MissionStore.remove(mission.id)

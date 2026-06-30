@@ -2,14 +2,13 @@ package com.atakmap.android.eagle6.ui
 
 import android.content.Context
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import com.atak.plugins.impl.PluginLayoutInflater
 import com.atakmap.android.eagle6.cot.MessageFormatter
-import com.atakmap.android.eagle6.model.Eagle6Settings
+import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.android.eagle6.model.MissionStatus
 import com.atakmap.android.plugintemplate.plugin.R
@@ -17,9 +16,8 @@ import com.atakmap.coremap.maps.coords.GeoPoint
 
 class MissionDetailView(
     private val pluginContext: Context,
-    private val settings: Eagle6Settings,
     private val onPickLocation: (prompt: String, callback: (GeoPoint) -> Unit) -> Unit,
-    private val onMissionUpdated: (Mission, String) -> Unit,  // mission + message for COT/chat
+    private val onMissionUpdated: (Mission, String) -> Unit,
     private val onRth: (Mission) -> Unit
 ) {
     val view: View = PluginLayoutInflater.inflate(pluginContext, R.layout.eagle6_mission_detail, null)
@@ -50,7 +48,6 @@ class MissionDetailView(
         txtActivityMgrs.text = MessageFormatter.toMgrs(m.activityLocation)
         txtStatus.text = m.status.displayName()
 
-        // Primary action depends on status
         when (m.status) {
             MissionStatus.LAUNCHING -> {
                 btnPrimaryAction.visibility = View.VISIBLE
@@ -83,20 +80,18 @@ class MissionDetailView(
     }
 
     private fun bindRetaskTypeSpinner() {
-        val types = settings.missionTypes
-        val adapter = ArrayAdapter(pluginContext, android.R.layout.simple_spinner_item, types)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val types = Eagle6Prefs.missionTypes
+        val adapter = ArrayAdapter(pluginContext, R.layout.e6_spinner_item, types)
+        adapter.setDropDownViewResource(R.layout.e6_spinner_dropdown_item)
         spinRetaskType.adapter = adapter
         val m = mission ?: return
-        val idx = types.indexOf(m.missionType).coerceAtLeast(0)
-        spinRetaskType.setSelection(idx)
+        spinRetaskType.setSelection(types.indexOf(m.missionType).coerceAtLeast(0))
     }
 
     private fun markOnTask() {
         val m = mission ?: return
         m.status = MissionStatus.ON_TASK
-        val msg = MessageFormatter.onTaskMessage(m.pilot)
-        onMissionUpdated(m, msg)
+        onMissionUpdated(m, MessageFormatter.onTaskMessage(m.pilot))
         refresh()
     }
 
@@ -105,8 +100,7 @@ class MissionDetailView(
         val newType = spinRetaskType.selectedItem?.toString() ?: return
         if (newType == m.missionType) return
         m.missionType = newType
-        val msg = MessageFormatter.retaskTypeMessage(m.pilot, newType)
-        onMissionUpdated(m, msg)
+        onMissionUpdated(m, MessageFormatter.retaskTypeMessage(m.pilot, newType))
         refresh()
     }
 
@@ -114,8 +108,7 @@ class MissionDetailView(
         val m = mission ?: return
         onPickLocation("Tap map to set new activity location") { pt ->
             m.activityLocation = pt
-            val msg = MessageFormatter.retaskLocationMessage(m.pilot, MessageFormatter.toMgrs(pt), m.altitudeFt)
-            onMissionUpdated(m, msg)
+            onMissionUpdated(m, MessageFormatter.retaskLocationMessage(m.pilot, MessageFormatter.toMgrs(pt), m.altitudeFt))
             txtActivityMgrs.text = MessageFormatter.toMgrs(pt)
         }
     }

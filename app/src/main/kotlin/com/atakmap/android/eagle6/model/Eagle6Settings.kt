@@ -2,64 +2,71 @@ package com.atakmap.android.eagle6.model
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
-class Eagle6Settings(context: Context) {
-
-    private val prefs: SharedPreferences =
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+class Eagle6Settings private constructor(private val prefs: SharedPreferences) {
 
     var selfCallsign: String
         get() = prefs.getString(KEY_SELF_CALLSIGN, "UNKNOWN") ?: "UNKNOWN"
-        set(value) = prefs.edit().putString(KEY_SELF_CALLSIGN, value).apply()
+        set(value) { prefs.edit().putString(KEY_SELF_CALLSIGN, value).commit() }
 
     var pilots: List<String>
         get() = getList(KEY_PILOTS, listOf(selfCallsign))
-        set(value) = setList(KEY_PILOTS, value)
+        set(value) { setList(KEY_PILOTS, value) }
 
     var platforms: List<String>
         get() = getList(KEY_PLATFORMS, DEFAULT_PLATFORMS)
-        set(value) = setList(KEY_PLATFORMS, value)
+        set(value) { setList(KEY_PLATFORMS, value) }
 
     var missionTypes: List<String>
         get() = getList(KEY_MISSION_TYPES, DEFAULT_MISSION_TYPES)
-        set(value) = setList(KEY_MISSION_TYPES, value)
+        set(value) { setList(KEY_MISSION_TYPES, value) }
 
     var altitudes: List<String>
         get() = getList(KEY_ALTITUDES, DEFAULT_ALTITUDES)
-        set(value) = setList(KEY_ALTITUDES, value)
+        set(value) { setList(KEY_ALTITUDES, value) }
 
     var launchZoneRadiusM: Int
         get() = prefs.getInt(KEY_LAUNCH_RADIUS, 50)
-        set(value) = prefs.edit().putInt(KEY_LAUNCH_RADIUS, value.coerceIn(10, 100)).apply()
+        set(value) { prefs.edit(commit = true) {
+            putInt(
+                KEY_LAUNCH_RADIUS,
+                value.coerceIn(10, 100)
+            )
+        } }
 
     var activityZoneRadiusM: Int
         get() = prefs.getInt(KEY_ACTIVITY_RADIUS, 300)
-        set(value) = prefs.edit().putInt(KEY_ACTIVITY_RADIUS, value.coerceIn(100, 1000)).apply()
+        set(value) { prefs.edit(commit = true) {
+            putInt(
+                KEY_ACTIVITY_RADIUS,
+                value.coerceIn(100, 1000)
+            )
+        } }
 
     var chatRooms: List<String>
         get() = getList(KEY_CHAT_ROOMS, emptyList())
-        set(value) = setList(KEY_CHAT_ROOMS, value)
+        set(value) { setList(KEY_CHAT_ROOMS, value) }
 
-    // Last-used form values (persist between sessions)
     var lastPilotIndex: Int
         get() = prefs.getInt(KEY_LAST_PILOT, 0)
-        set(value) = prefs.edit().putInt(KEY_LAST_PILOT, value).apply()
+        set(value) { prefs.edit(commit = true) { putInt(KEY_LAST_PILOT, value) } }
 
     var lastPlatformIndex: Int
         get() = prefs.getInt(KEY_LAST_PLATFORM, 0)
-        set(value) = prefs.edit().putInt(KEY_LAST_PLATFORM, value).apply()
+        set(value) { prefs.edit(commit = true) { putInt(KEY_LAST_PLATFORM, value) } }
 
     var lastMissionTypeIndex: Int
         get() = prefs.getInt(KEY_LAST_MISSION_TYPE, 0)
-        set(value) = prefs.edit().putInt(KEY_LAST_MISSION_TYPE, value).apply()
+        set(value) { prefs.edit(commit = true) { putInt(KEY_LAST_MISSION_TYPE, value) } }
 
     var lastAltitudeIndex: Int
         get() = prefs.getInt(KEY_LAST_ALTITUDE, 0)
-        set(value) = prefs.edit().putInt(KEY_LAST_ALTITUDE, value).apply()
+        set(value) { prefs.edit(commit = true) { putInt(KEY_LAST_ALTITUDE, value) } }
 
     var lastDurationMin: Int
         get() = prefs.getInt(KEY_LAST_DURATION, 60)
-        set(value) = prefs.edit().putInt(KEY_LAST_DURATION, value).apply()
+        set(value) { prefs.edit(commit = true) { putInt(KEY_LAST_DURATION, value) } }
 
     private fun getList(key: String, default: List<String>): List<String> {
         val raw = prefs.getString(key, null) ?: return default
@@ -67,10 +74,22 @@ class Eagle6Settings(context: Context) {
     }
 
     private fun setList(key: String, list: List<String>) {
-        prefs.edit().putString(key, list.joinToString(DELIM)).apply()
+        prefs.edit(commit = true) { putString(key, list.joinToString(DELIM)) }
     }
 
     companion object {
+        private var _instance: Eagle6Settings? = null
+
+        /** Call in Eagle6MapComponent.onCreate() before anything else. */
+        fun init(context: Context) {
+            _instance = Eagle6Settings(
+                context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            )
+        }
+
+        val instance: Eagle6Settings
+            get() = _instance ?: error("Eagle6Settings not initialized — call init() first")
+
         const val PREFS_NAME = "eagle6"
         private const val DELIM = "||"
 

@@ -144,13 +144,18 @@
     <style name="E6Spinner">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingVertical">6dp</item>
         <item name="android:layout_marginBottom">12dp</item>
         <item name="android:background">@color/e6_surface</item>
+        <!-- Dropdown mode works in the DropDownReceiver panel (view is attached to ATAK's activity
+             window). Dialog mode from ATAKPluginTheme/ATAKSpinner would crash here because the
+             plugin context is not an Activity context. -->
+        <item name="android:spinnerMode">dropdown</item>
     </style>
 
     <style name="E6IconBtn" parent="@android:style/Widget.Button">
-        <item name="android:layout_width">52dp</item>
-        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:textSize">10sp</item>
         <item name="android:background">@drawable/btn_secondary</item>
         <item name="android:textColor">@color/e6_text_secondary</item>

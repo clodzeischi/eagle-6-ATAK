@@ -1,65 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Personnel">
-        <Preference
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="General">
+        <com.atakmap.android.gui.PanPreference
             android:key="pref_pilots"
             android:title="Pilots"
             android:summary="Tap to manage pilot list"/>
-    </PreferenceCategory>
 
-    <PreferenceCategory android:title="Aircraft">
-        <Preference
+        <com.atakmap.android.gui.PanPreference
             android:key="pref_platforms"
             android:title="Platforms"
             android:summary="Tap to manage platform list"/>
-    </PreferenceCategory>
 
-    <PreferenceCategory android:title="Operations">
-        <Preference
+        <com.atakmap.android.gui.PanPreference
             android:key="pref_mission_types"
             android:title="Mission Types"
             android:summary="Tap to manage mission type list"/>
 
-        <Preference
+        <com.atakmap.android.gui.PanPreference
             android:key="pref_altitudes"
             android:title="Altitudes (ft AGL)"
             android:summary="Tap to manage altitude list"/>
-    </PreferenceCategory>
+    </com.atakmap.android.gui.PanPreferenceCategory>
 
-    <PreferenceCategory android:title="Zones">
-        <EditTextPreference
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="Zones">
+        <com.atakmap.android.gui.PanEditTextPreference
             android:key="pref_launch_radius"
             android:title="Launch/Recovery Zone Radius (m)"
             android:summary="10–100 m. Shown as pulsating circle on map."
+            android:dialogTitle="Launch/Recovery Zone Radius (m)"
             android:inputType="number"
             android:defaultValue="50"/>
 
-        <EditTextPreference
+        <com.atakmap.android.gui.PanEditTextPreference
             android:key="pref_activity_radius"
             android:title="Activity Zone Radius (m)"
             android:summary="100–1000 m. Shown as static circle on map."
+            android:dialogTitle="Activity Zone Radius (m)"
             android:inputType="number"
             android:defaultValue="300"/>
-    </PreferenceCategory>
+    </com.atakmap.android.gui.PanPreferenceCategory>
 
-    <PreferenceCategory android:title="Communications">
-        <Preference
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="Communications">
+        <com.atakmap.android.gui.PanPreference
             android:key="pref_chat_rooms"
             android:title="TAK Chat Rooms"
             android:summary="Tap to select rooms for log messages"/>
-    </PreferenceCategory>
+    </com.atakmap.android.gui.PanPreferenceCategory>
 
-    <PreferenceCategory android:title="Logs">
-        <Preference
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="Logs">
+        <com.atakmap.android.gui.PanPreference
             android:key="pref_export_logs"
             android:title="Export Logs"
             android:summary="Copy eagle6.log to device storage"/>
 
-        <Preference
+        <com.atakmap.android.gui.PanPreference
             android:key="pref_erase_logs"
             android:title="Erase Logs"
             android:summary="Delete all local log entries"/>
-    </PreferenceCategory>
+    </com.atakmap.android.gui.PanPreferenceCategory>
 
 </PreferenceScreen>

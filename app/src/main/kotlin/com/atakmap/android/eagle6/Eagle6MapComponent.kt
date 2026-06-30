@@ -6,7 +6,7 @@ import com.atakmap.android.cot.detail.CotDetailManager
 import com.atakmap.android.dropdown.DropDownMapComponent
 import com.atakmap.android.eagle6.cot.Eagle6DetailHandler
 import com.atakmap.android.eagle6.map.ReceivedMissionRenderer
-import com.atakmap.android.eagle6.model.Eagle6Settings
+import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.settings.Eagle6PreferenceFragment
 import com.atakmap.android.ipc.AtakBroadcast.DocumentedIntentFilter
 import com.atakmap.android.maps.MapView
@@ -19,11 +19,10 @@ class Eagle6MapComponent : DropDownMapComponent() {
     private lateinit var renderer: ReceivedMissionRenderer
 
     override fun onCreate(context: Context, intent: Intent, view: MapView) {
+        context.setTheme(com.atakmap.android.plugintemplate.plugin.R.style.ATAKPluginTheme)
+        Eagle6Prefs.init(context)
         super.onCreate(context, intent, view)
-        // Capture EUD callsign as the default pilot
-        val settings = Eagle6Settings(context)
-        val callsign = view.selfMarker?.getMetaString("callsign", "UNKNOWN") ?: "UNKNOWN"
-        settings.selfCallsign = callsign
+        Eagle6Prefs.selfCallsign = view.selfMarker?.getMetaString("callsign", "UNKNOWN") ?: "UNKNOWN"
 
         // Drop-down receiver
         dropDown = Eagle6DropDownReceiver(view, context)

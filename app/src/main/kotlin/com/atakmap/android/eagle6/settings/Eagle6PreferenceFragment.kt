@@ -7,30 +7,31 @@ import android.os.Bundle
 import android.preference.Preference
 import android.widget.EditText
 import android.widget.Toast
+import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.model.Eagle6Settings
+import com.atakmap.android.gui.PanEditTextPreference
 import com.atakmap.android.plugintemplate.plugin.R
 import com.atakmap.android.preference.PluginPreferenceFragment
 
 class Eagle6PreferenceFragment : PluginPreferenceFragment {
 
     companion object {
-        private var staticPluginContext: Context? = null
+        // Held only to give PluginPreferenceFragment a context for XML inflation on fragment recreation.
+        private var staticCtx: Context? = null
         const val PREF_KEY = "eagle6Preference"
     }
 
-    constructor() : super(staticPluginContext, R.xml.eagle6_preferences)
+    constructor() : super(staticCtx, R.xml.eagle6_preferences)
 
     @SuppressLint("ValidFragment")
-    constructor(pluginContext: Context) : super(pluginContext, R.xml.eagle6_preferences) {
-        staticPluginContext = pluginContext
+    constructor(ctx: Context) : super(ctx, R.xml.eagle6_preferences) {
+        staticCtx = ctx
     }
 
-    private lateinit var settings: Eagle6Settings
+    private val settings get() = Eagle6Settings.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val ctx = staticPluginContext ?: return
-        settings = Eagle6Settings(ctx)
 
         setupListPref(
             key = "pref_pilots",
@@ -96,25 +97,43 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
             }
         )
 
-        findPreference("pref_launch_radius")
-            ?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
-            val v = newVal.toString().toIntOrNull()
-            if (v == null || v !in 10..100) {
-                Toast.makeText(activity, "Launch zone radius must be 10–100 m.", Toast.LENGTH_SHORT).show()
-                false
-            } else {
-                settings.launchZoneRadiusM = v; true
+        setupListPref(
+            key = "pref_chat_rooms",
+            title = "TAK Chat Rooms",
+            getList = { settings.chatRooms },
+            saveList = { updated ->
+                settings.chatRooms = updated
+                true
+            }
+        )
+
+        // Push current stored values into PanEditTextPreference so it shows what Eagle6Settings
+        // actually has, regardless of what ATAK's own default SharedPreferences file contains.
+        (findPreference("pref_launch_radius") as? PanEditTextPreference)?.apply {
+            text = settings.launchZoneRadiusM.toString()
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
+                val v = newVal.toString().toIntOrNull()
+                if (v == null || v !in 10..100) {
+                    Toast.makeText(activity, "Launch zone radius must be 10–100 m.", Toast.LENGTH_SHORT).show()
+                    false
+                } else {
+                    settings.launchZoneRadiusM = v
+                    true
+                }
             }
         }
 
-        findPreference("pref_activity_radius")
-            ?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
-            val v = newVal.toString().toIntOrNull()
-            if (v == null || v !in 100..1000) {
-                Toast.makeText(activity, "Activity zone radius must be 100–1000 m.", Toast.LENGTH_SHORT).show()
-                false
-            } else {
-                settings.activityZoneRadiusM = v; true
+        (findPreference("pref_activity_radius") as? PanEditTextPreference)?.apply {
+            text = settings.activityZoneRadiusM.toString()
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
+                val v = newVal.toString().toIntOrNull()
+                if (v == null || v !in 100..1000) {
+                    Toast.makeText(activity, "Activity zone radius must be 100–1000 m.", Toast.LENGTH_SHORT).show()
+                    false
+                } else {
+                    settings.activityZoneRadiusM = v
+                    true
+                }
             }
         }
     }
@@ -144,12 +163,6 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         val mutable = current.toMutableList()
         val ctx = activity ?: return
 
-        fun rebuild(dialog: AlertDialog) {
-            // Rebuild items list display – using simple string join in a TextView
-            // We refresh the dialog message rather than rebuilding the whole dialog
-            dialog.setMessage(mutable.joinToString("\n• ", prefix = "• "))
-        }
-
         val display = mutable.joinToString("\n• ", prefix = "• ")
         AlertDialog.Builder(ctx)
             .setTitle(title)
@@ -164,9 +177,13 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
                     .setView(input)
                     .setPositiveButton("Add") { _, _ ->
                         val v = input.text.toString().trim()
-                        if (v.isNotEmpty()) {
-                            mutable.add(v)
-                            showListEditor(title, mutable, save, onSaved)
+                        when {
+                            v.isEmpty() -> {}
+                            v.contains("||") -> Toast.makeText(ctx, "Value cannot contain '||'.", Toast.LENGTH_SHORT).show()
+                            else -> {
+                                mutable.add(v)
+                                showListEditor(title, mutable, save, onSaved)
+                            }
                         }
                     }
                     .setNegativeButton("Cancel", null)

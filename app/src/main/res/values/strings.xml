@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Eagle-6</string>
-    <string name="app_desc">UAS operations planning and reporting for ATAK</string>
+    <string name="app_desc">UAS operations planning and reporting plugin</string>
+
+    <!-- New Mission Screen -->
+    <string name="new_mission_title">NEW MISSION</string>
+    <string name="new_mission_pilot">PILOT</string>
+    <string name="new_mission_platform">PLATFORM</string>
+    <string name="new_mission_mission_type">MISSION TYPE</string>
+    <string name="new_mission_launch_location">LAUNCH LOCATION (MGRS)</string>
+    <string name="new_mission_waypoints">WAYPOINTS (optional)</string>
+    <string name="new_mission_activity_location">ACTIVITY LOCATION (MGRS)</string>
+    <string name="new_mission_altitude">ALTITUDE (ft AGL)</string>
+    <string name="new_mission_duration">EXPECTED DURATION (min)</string>
+    <string name="new_mission_launch">LAUNCH</string>
+    <string name="new_mission_cancel">CANCEL</string>
+    <string name="new_mission_map">MAP</string>
+    <string name="new_mission_self">SELF</string>
+
+    <!-- Missions Screen -->
+    <string name="missions_title">EAGLE-6</string>
+    <string name="missions_new_mission">NEW MISSION</string>
+    <string name="missions_settings">SETTINGS</string>
+    <string name="missions_empty">no active missions</string>
+
 </resources>

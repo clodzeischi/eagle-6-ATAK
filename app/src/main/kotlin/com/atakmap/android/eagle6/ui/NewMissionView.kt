@@ -2,7 +2,6 @@ package com.atakmap.android.eagle6.ui
 
 import android.content.Context
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -12,14 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.atak.plugins.impl.PluginLayoutInflater
 import com.atakmap.android.eagle6.cot.MessageFormatter
-import com.atakmap.android.eagle6.model.Eagle6Settings
+import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.android.plugintemplate.plugin.R
 import com.atakmap.coremap.maps.coords.GeoPoint
 
 class NewMissionView(
     private val pluginContext: Context,
-    private val settings: Eagle6Settings,
     private val selfLocation: () -> GeoPoint,
     private val onPickLocation: (prompt: String, callback: (GeoPoint) -> Unit) -> Unit,
     private val onLaunch: (Mission) -> Unit,
@@ -72,11 +70,11 @@ class NewMissionView(
     }
 
     fun refresh() {
-        bindSpinner(spinPilot, settings.pilots, settings.lastPilotIndex)
-        bindSpinner(spinPlatform, settings.platforms, settings.lastPlatformIndex)
-        bindSpinner(spinType, settings.missionTypes, settings.lastMissionTypeIndex)
-        bindSpinner(spinAltitude, settings.altitudes, settings.lastAltitudeIndex)
-        editDuration.setText(settings.lastDurationMin.toString())
+        bindSpinner(spinPilot, Eagle6Prefs.pilots, Eagle6Prefs.lastPilotIndex)
+        bindSpinner(spinPlatform, Eagle6Prefs.platforms, Eagle6Prefs.lastPlatformIndex)
+        bindSpinner(spinType, Eagle6Prefs.missionTypes, Eagle6Prefs.lastMissionTypeIndex)
+        bindSpinner(spinAltitude, Eagle6Prefs.altitudes, Eagle6Prefs.lastAltitudeIndex)
+        editDuration.setText(Eagle6Prefs.lastDurationMin.toString())
 
         launchLocation = selfLocation()
         activityLocation = selfLocation()
@@ -87,8 +85,8 @@ class NewMissionView(
     }
 
     private fun bindSpinner(spinner: Spinner, items: List<String>, selectedIndex: Int) {
-        val adapter = ArrayAdapter(pluginContext, android.R.layout.simple_spinner_item, items)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter(pluginContext, R.layout.e6_spinner_item, items)
+        adapter.setDropDownViewResource(R.layout.e6_spinner_dropdown_item)
         spinner.adapter = adapter
         spinner.setSelection(selectedIndex.coerceIn(0, (items.size - 1).coerceAtLeast(0)))
     }
@@ -118,23 +116,25 @@ class NewMissionView(
             return
         }
 
-        // Persist last-used selections
-        settings.lastPilotIndex = spinPilot.selectedItemPosition
-        settings.lastPlatformIndex = spinPlatform.selectedItemPosition
-        settings.lastMissionTypeIndex = spinType.selectedItemPosition
-        settings.lastAltitudeIndex = spinAltitude.selectedItemPosition
-        settings.lastDurationMin = duration
-
-        val mission = Mission(
-            pilot = pilot,
-            platform = platform,
-            missionType = missionType,
-            launchLocation = launchLocation,
-            waypoints = waypoints.toMutableList(),
-            activityLocation = activityLocation,
-            altitudeFt = altitude,
-            expectedDurationMin = duration
+        Eagle6Prefs.saveLastSelections(
+            pilotIdx = spinPilot.selectedItemPosition,
+            platformIdx = spinPlatform.selectedItemPosition,
+            missionTypeIdx = spinType.selectedItemPosition,
+            altitudeIdx = spinAltitude.selectedItemPosition,
+            durationMin = duration
         )
-        onLaunch(mission)
+
+        onLaunch(
+            Mission(
+                pilot = pilot,
+                platform = platform,
+                missionType = missionType,
+                launchLocation = launchLocation,
+                waypoints = waypoints.toMutableList(),
+                activityLocation = activityLocation,
+                altitudeFt = altitude,
+                expectedDurationMin = duration
+            )
+        )
     }
 }
