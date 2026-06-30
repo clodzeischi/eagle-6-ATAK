@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import com.atak.plugins.impl.PluginLayoutInflater
@@ -18,7 +19,9 @@ class MissionDetailView(
     private val pluginContext: Context,
     private val onPickLocation: (prompt: String, callback: (GeoPoint) -> Unit) -> Unit,
     private val onMissionUpdated: (Mission, String) -> Unit,
-    private val onRth: (Mission) -> Unit
+    private val onRth: (Mission) -> Unit,
+    private val onCancel: (Mission) -> Unit,
+    private val onBack: () -> Unit
 ) {
     val view: View = PluginLayoutInflater.inflate(pluginContext, R.layout.eagle6_mission_detail, null)
 
@@ -28,12 +31,18 @@ class MissionDetailView(
     private val txtActivityMgrs: TextView = view.findViewById(R.id.detail_activity_mgrs)
     private val txtStatus: TextView = view.findViewById(R.id.detail_status)
     private val btnPrimaryAction: Button = view.findViewById(R.id.btn_primary_action)
+    private val rowRetaskType: LinearLayout = view.findViewById(R.id.row_retask_type)
     private val spinRetaskType: Spinner = view.findViewById(R.id.spin_retask_type)
     private val btnRetaskType: Button = view.findViewById(R.id.btn_retask_type)
     private val btnRetaskLocation: Button = view.findViewById(R.id.btn_retask_location)
     private val btnRth: Button = view.findViewById(R.id.btn_rth)
+    private val btnCancel: Button = view.findViewById(R.id.btn_cancel)
 
     private var mission: Mission? = null
+
+    init {
+        view.findViewById<Button>(R.id.btn_back).setOnClickListener { onBack() }
+    }
 
     fun bind(m: Mission) {
         mission = m
@@ -53,28 +62,39 @@ class MissionDetailView(
                 btnPrimaryAction.visibility = View.VISIBLE
                 btnPrimaryAction.text = pluginContext.getString(R.string.detail_action_mark_on_task)
                 btnPrimaryAction.setOnClickListener { markOnTask() }
-                btnRetaskType.visibility = View.GONE
+                rowRetaskType.visibility = View.GONE
                 btnRetaskLocation.visibility = View.GONE
-                spinRetaskType.visibility = View.GONE
                 btnRth.visibility = View.GONE
+                btnCancel.visibility = View.VISIBLE
+                btnCancel.text = pluginContext.getString(R.string.detail_action_cancel_mission)
+                btnCancel.setOnClickListener { onCancel(m) }
             }
             MissionStatus.ON_TASK -> {
                 btnPrimaryAction.visibility = View.GONE
-                btnRetaskType.visibility = View.VISIBLE
-                spinRetaskType.visibility = View.VISIBLE
+                rowRetaskType.visibility = View.VISIBLE
                 btnRetaskLocation.visibility = View.VISIBLE
                 btnRth.visibility = View.VISIBLE
+                btnCancel.visibility = View.GONE
                 bindRetaskTypeSpinner()
                 btnRetaskType.setOnClickListener { retaskType() }
                 btnRetaskLocation.setOnClickListener { retaskLocation() }
                 btnRth.setOnClickListener { startRth() }
             }
-            else -> {
+            MissionStatus.RTH -> {
                 btnPrimaryAction.visibility = View.GONE
-                btnRetaskType.visibility = View.GONE
-                spinRetaskType.visibility = View.GONE
+                rowRetaskType.visibility = View.GONE
                 btnRetaskLocation.visibility = View.GONE
                 btnRth.visibility = View.GONE
+                btnCancel.visibility = View.VISIBLE
+                btnCancel.text = pluginContext.getString(R.string.common_cancel_rth)
+                btnCancel.setOnClickListener { onCancel(m) }
+            }
+            else -> {
+                btnPrimaryAction.visibility = View.GONE
+                rowRetaskType.visibility = View.GONE
+                btnRetaskLocation.visibility = View.GONE
+                btnRth.visibility = View.GONE
+                btnCancel.visibility = View.GONE
             }
         }
     }

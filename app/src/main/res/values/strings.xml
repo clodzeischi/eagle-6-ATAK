@@ -38,11 +38,14 @@
     <string name="detail_label_platform">PLATFORM</string>
     <string name="detail_label_type">TYPE</string>
     <string name="detail_label_activity">ACTIVITY</string>
+    <string name="detail_action_back">← BACK</string>
     <string name="detail_action_mark_on_task">MARK ON TASK</string>
     <string name="detail_action_retask_type">RETASK TYPE</string>
     <string name="detail_action_retask_location">RETASK LOCATION</string>
     <string name="detail_action_rth">RTH</string>
+    <string name="detail_action_cancel_mission">CANCEL MISSION</string>
     <string name="detail_prompt_activity">Tap map to set new activity location</string>
+    <string name="msg_mission_aborted">Mission aborted.</string>
 
     <!-- Landing Screen -->
     <string name="landing_title">RETURN TO HOME</string>
@@ -52,6 +55,9 @@
     <string name="landing_pilot_platform">%1$s — %2$s</string>
     <string name="landing_prompt_recovery">Tap map to set recovery point</string>
     <string name="landing_prompt_waypoint">Tap map to add RTH waypoint</string>
+
+    <!-- Common actions -->
+    <string name="common_cancel_rth">CANCEL RTH</string>
 
     <!-- Settings / Preferences -->
     <string name="pref_category_general">General</string>

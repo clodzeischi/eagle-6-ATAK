@@ -16,7 +16,8 @@ class LandingView(
     private val pluginContext: Context,
     private val selfLocation: () -> GeoPoint,
     private val onPickLocation: (prompt: String, callback: (GeoPoint) -> Unit) -> Unit,
-    private val onLanded: (Mission, GeoPoint) -> Unit
+    private val onLanded: (Mission, GeoPoint) -> Unit,
+    private val onCancelRth: (Mission) -> Unit
 ) {
     val view: View = PluginLayoutInflater.inflate(pluginContext, R.layout.eagle6_landing, null)
 
@@ -50,6 +51,10 @@ class LandingView(
             m.waypoints.clear()
             m.waypoints.addAll(waypoints)
             onLanded(m, landingLocation)
+        }
+        view.findViewById<Button>(R.id.btn_cancel_rth).setOnClickListener {
+            val m = mission ?: return@setOnClickListener
+            onCancelRth(m)
         }
     }
 

@@ -36,4 +36,10 @@ object MessageFormatter {
 
     fun landMessage(pilot: String, platform: String, landMgrs: String, missionType: String): String =
         "${timeStr()}: $pilot landed $platform at $landMgrs. ${missionType.uppercase()} complete."
+
+    fun cancelMissionMessage(pilot: String, platform: String): String =
+        "${timeStr()}: $pilot aborted $platform mission."
+
+    fun cancelRthMessage(pilot: String): String =
+        "${timeStr()}: $pilot RTH cancelled — returning to task."
 }

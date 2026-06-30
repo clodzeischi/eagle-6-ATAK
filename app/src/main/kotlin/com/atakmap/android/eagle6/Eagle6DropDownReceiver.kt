@@ -18,7 +18,9 @@ import com.atakmap.android.eagle6.ui.MissionDetailView
 import com.atakmap.android.eagle6.ui.MissionListView
 import com.atakmap.android.eagle6.settings.Eagle6PreferenceFragment
 import com.atakmap.android.eagle6.ui.NewMissionView
+import com.atakmap.android.eagle6.model.MissionStatus
 import com.atakmap.android.ipc.AtakBroadcast
+import com.atakmap.android.plugintemplate.plugin.R
 import com.atakmap.android.maps.MapView
 import com.atakmap.coremap.cot.event.CotEvent
 import com.atakmap.coremap.maps.coords.GeoPoint
@@ -77,7 +79,15 @@ class Eagle6DropDownReceiver(
             onRth = { mission ->
                 landingView.bind(mission)
                 navigateTo(landingView.view)
-            }
+            },
+            onCancel = { mission ->
+                when (mission.status) {
+                    MissionStatus.LAUNCHING -> cancelMission(mission)
+                    MissionStatus.RTH -> cancelRth(mission)
+                    else -> {}
+                }
+            },
+            onBack = { onBackButtonPressed() }
         )
     }
 
@@ -86,7 +96,8 @@ class Eagle6DropDownReceiver(
             pluginContext = pluginContext,
             selfLocation = { selfPoint },
             onPickLocation = { prompt, cb -> startPicker(prompt, cb) },
-            onLanded = { mission, landingPoint -> completeLanding(mission, landingPoint) }
+            onLanded = { mission, landingPoint -> completeLanding(mission, landingPoint) },
+            onCancelRth = { mission -> cancelRth(mission); onBackButtonPressed() }
         )
     }
 
@@ -172,6 +183,26 @@ class Eagle6DropDownReceiver(
         dispatchCot(mission, location, message, tag)
         chatSender.sendToRooms(message, Eagle6Prefs.chatRooms)
         logEntry(message)
+    }
+
+    private fun cancelMission(mission: Mission) {
+        val message = MessageFormatter.cancelMissionMessage(mission.pilot, mission.platform)
+        dispatchCot(mission, mission.launchLocation, message, "CANCEL")
+        chatSender.sendToRooms(message, Eagle6Prefs.chatRooms)
+        logEntry(message)
+        MissionStore.remove(mission.id)
+        navStack.clear()
+        currentView = missionListView.view
+        missionListView.refresh()
+        showDropDown(missionListView.view, HALF_WIDTH, FULL_HEIGHT, FULL_WIDTH, HALF_HEIGHT, false, this)
+        Toast.makeText(pluginContext, R.string.msg_mission_aborted, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun cancelRth(mission: Mission) {
+        mission.status = MissionStatus.ON_TASK
+        val message = MessageFormatter.cancelRthMessage(mission.pilot)
+        onMissionStatusChanged(mission, message)
+        missionDetailView.bind(mission)
     }
 
     private fun completeLanding(mission: Mission, landingPoint: GeoPoint) {
