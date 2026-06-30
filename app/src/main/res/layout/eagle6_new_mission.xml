@@ -58,12 +58,12 @@
             <Button
                 android:id="@+id/btn_pick_launch"
                 style="@style/E6IconBtn"
-                android:text="@string/new_mission_map" />
+                android:text="@string/common_map" />
 
             <Button
                 android:id="@+id/btn_reset_launch"
                 style="@style/E6IconBtn"
-                android:text="@string/new_mission_self" />
+                android:text="@string/common_self" />
         </LinearLayout>
 
         <!-- Waypoints -->
@@ -75,15 +75,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
+
         <Button
             android:id="@+id/btn_add_waypoint"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:text="+ ADD WAYPOINT"
-            android:textSize="11sp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/btn_secondary"
+            android:text="@string/common_add_waypoint"
             android:textColor="@color/e6_text_secondary"
-            android:layout_marginBottom="12dp"/>
+            android:textSize="14sp" />
 
         <!-- Activity location -->
         <TextView
@@ -105,12 +106,12 @@
             <Button
                 android:id="@+id/btn_pick_activity"
                 style="@style/E6IconBtn"
-                android:text="@string/new_mission_map" />
+                android:text="@string/common_map" />
 
             <Button
                 android:id="@+id/btn_reset_activity"
                 style="@style/E6IconBtn"
-                android:text="@string/new_mission_self" />
+                android:text="@string/common_self" />
         </LinearLayout>
 
         <!-- Altitude -->

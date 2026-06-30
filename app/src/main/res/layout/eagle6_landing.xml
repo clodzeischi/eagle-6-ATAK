@@ -29,7 +29,9 @@
             android:layout_marginBottom="20dp"/>
 
         <!-- Recovery location -->
-        <TextView style="@style/E6Label" android:text="RECOVERY POINT"/>
+        <TextView
+            style="@style/E6Label"
+            android:text="@string/landing_recovery_point" />
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
             android:layout_marginBottom="12dp">
@@ -41,8 +43,16 @@
                 android:textColor="@color/e6_text_primary"
                 android:textSize="13sp"
                 android:fontFamily="monospace"/>
-            <Button android:id="@+id/btn_pick_landing" style="@style/E6IconBtn" android:text="MAP"/>
-            <Button android:id="@+id/btn_reset_landing" style="@style/E6IconBtn" android:text="SELF"/>
+
+            <Button
+                android:id="@+id/btn_pick_landing"
+                style="@style/E6IconBtn"
+                android:text="@string/common_map" />
+
+            <Button
+                android:id="@+id/btn_reset_landing"
+                style="@style/E6IconBtn"
+                android:text="@string/common_self" />
         </LinearLayout>
 
         <!-- RTH waypoints -->
@@ -52,15 +62,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
+
         <Button
             android:id="@+id/btn_add_rtw_waypoint"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:text="+ ADD WAYPOINT"
-            android:textSize="11sp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/btn_secondary"
+            android:text="@string/common_add_waypoint"
             android:textColor="@color/e6_text_secondary"
-            android:layout_marginBottom="24dp"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btn_land"

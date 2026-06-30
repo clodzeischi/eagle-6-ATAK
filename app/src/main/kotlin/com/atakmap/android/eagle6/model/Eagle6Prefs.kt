@@ -37,11 +37,21 @@ object Eagle6Prefs {
 
     var launchZoneRadiusM: Int
         get() = prefs.getInt(KEY_LAUNCH_RADIUS, 50)
-        set(value) { prefs.edit().putInt(KEY_LAUNCH_RADIUS, value.coerceIn(10, 100)).commit() }
+        set(value) { prefs.edit(commit = true) {
+            putInt(
+                KEY_LAUNCH_RADIUS,
+                value.coerceIn(10, 100)
+            )
+        } }
 
     var activityZoneRadiusM: Int
         get() = prefs.getInt(KEY_ACTIVITY_RADIUS, 300)
-        set(value) { prefs.edit().putInt(KEY_ACTIVITY_RADIUS, value.coerceIn(100, 1000)).commit() }
+        set(value) { prefs.edit(commit = true) {
+            putInt(
+                KEY_ACTIVITY_RADIUS,
+                value.coerceIn(100, 1000)
+            )
+        } }
 
     var chatRooms: List<String>
         get() = getList(KEY_CHAT_ROOMS, emptyList())
@@ -61,13 +71,13 @@ object Eagle6Prefs {
         altitudeIdx: Int,
         durationMin: Int
     ) {
-        prefs.edit()
-            .putInt(KEY_LAST_PILOT, pilotIdx)
-            .putInt(KEY_LAST_PLATFORM, platformIdx)
-            .putInt(KEY_LAST_MISSION_TYPE, missionTypeIdx)
-            .putInt(KEY_LAST_ALTITUDE, altitudeIdx)
-            .putInt(KEY_LAST_DURATION, durationMin)
-            .commit()
+        prefs.edit(commit = true) {
+            putInt(KEY_LAST_PILOT, pilotIdx)
+                .putInt(KEY_LAST_PLATFORM, platformIdx)
+                .putInt(KEY_LAST_MISSION_TYPE, missionTypeIdx)
+                .putInt(KEY_LAST_ALTITUDE, altitudeIdx)
+                .putInt(KEY_LAST_DURATION, durationMin)
+        }
     }
 
     private fun getList(key: String, default: List<String>): List<String> {
@@ -76,7 +86,7 @@ object Eagle6Prefs {
     }
 
     private fun setList(key: String, list: List<String>) {
-        prefs.edit().putString(key, list.joinToString(DELIM)).commit()
+        prefs.edit(commit = true) { putString(key, list.joinToString(DELIM)) }
     }
 
     // ASCII Unit Separator — cannot be typed by a user

@@ -25,7 +25,6 @@
         <item name="android:buttonStyleToggle">@android:style/Widget.Button</item>
         <item name="android:spinnerStyle">@style/ATAKSpinner</item>
         <item name="android:spinnerItemStyle">@style/ATAKSpinnerItem</item>
-
         <item name="android:editTextStyle">@style/ATAKEditText</item>
 
         <!--
