@@ -92,14 +92,15 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
             android:layout_marginBottom="12dp">
+
             <TextView
                 android:id="@+id/txt_activity_mgrs"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="monospace"
                 android:textColor="@color/e6_text_primary"
-                android:textSize="13sp"
-                android:fontFamily="monospace"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_pick_activity"
@@ -122,15 +123,16 @@
         <TextView
             style="@style/E6Label"
             android:text="@string/new_mission_duration" />
+
         <EditText
             android:id="@+id/edit_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/e6_divider"
             android:inputType="number"
             android:textColor="@color/e6_text_primary"
-            android:backgroundTint="@color/e6_divider"
-            android:textSize="14sp"
-            android:layout_marginBottom="20dp"/>
+            android:textSize="16sp" />
 
         <!-- Launch / Cancel -->
         <Button

@@ -13,12 +13,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RETURN TO HOME"
+            android:layout_marginBottom="6dp"
+            android:letterSpacing="0.1"
+            android:text="@string/landing_title"
             android:textColor="@color/e6_orange"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.1"
-            android:layout_marginBottom="6dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/landing_pilot_platform"

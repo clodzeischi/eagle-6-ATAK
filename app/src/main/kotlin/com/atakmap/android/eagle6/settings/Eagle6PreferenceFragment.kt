@@ -8,7 +8,6 @@ import android.preference.Preference
 import android.widget.EditText
 import android.widget.Toast
 import com.atakmap.android.eagle6.model.Eagle6Prefs
-import com.atakmap.android.eagle6.model.Eagle6Settings
 import com.atakmap.android.gui.PanEditTextPreference
 import com.atakmap.android.plugintemplate.plugin.R
 import com.atakmap.android.preference.PluginPreferenceFragment
@@ -28,22 +27,19 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         staticCtx = ctx
     }
 
-    private val settings get() = Eagle6Settings.instance
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupListPref(
             key = "pref_pilots",
             title = "Pilots",
-            getList = { settings.pilots },
+            getList = { Eagle6Prefs.pilots },
             saveList = { updated ->
-                val self = settings.selfCallsign
-                if (updated.none { it == self }) {
+                if (updated.none { it == Eagle6Prefs.selfCallsign }) {
                     Toast.makeText(activity, "Cannot remove your own callsign.", Toast.LENGTH_SHORT).show()
                     false
                 } else {
-                    settings.pilots = updated
+                    Eagle6Prefs.pilots = updated
                     true
                 }
             }
@@ -52,13 +48,13 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         setupListPref(
             key = "pref_platforms",
             title = "Platforms",
-            getList = { settings.platforms },
+            getList = { Eagle6Prefs.platforms },
             saveList = { updated ->
                 if (updated.isEmpty()) {
                     Toast.makeText(activity, "Platforms list cannot be empty.", Toast.LENGTH_SHORT).show()
                     false
                 } else {
-                    settings.platforms = updated
+                    Eagle6Prefs.platforms = updated
                     true
                 }
             }
@@ -67,13 +63,13 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         setupListPref(
             key = "pref_mission_types",
             title = "Mission Types",
-            getList = { settings.missionTypes },
+            getList = { Eagle6Prefs.missionTypes },
             saveList = { updated ->
                 if (updated.isEmpty()) {
                     Toast.makeText(activity, "Mission types list cannot be empty.", Toast.LENGTH_SHORT).show()
                     false
                 } else {
-                    settings.missionTypes = updated
+                    Eagle6Prefs.missionTypes = updated
                     true
                 }
             }
@@ -82,7 +78,7 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         setupListPref(
             key = "pref_altitudes",
             title = "Altitudes (ft AGL)",
-            getList = { settings.altitudes },
+            getList = { Eagle6Prefs.altitudes },
             saveList = { updated ->
                 if (updated.isEmpty()) {
                     Toast.makeText(activity, "Altitude list cannot be empty.", Toast.LENGTH_SHORT).show()
@@ -91,7 +87,7 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
                     Toast.makeText(activity, "Altitudes cannot be negative.", Toast.LENGTH_SHORT).show()
                     false
                 } else {
-                    settings.altitudes = updated
+                    Eagle6Prefs.altitudes = updated
                     true
                 }
             }
@@ -100,38 +96,36 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         setupListPref(
             key = "pref_chat_rooms",
             title = "TAK Chat Rooms",
-            getList = { settings.chatRooms },
+            getList = { Eagle6Prefs.chatRooms },
             saveList = { updated ->
-                settings.chatRooms = updated
+                Eagle6Prefs.chatRooms = updated
                 true
             }
         )
 
-        // Push current stored values into PanEditTextPreference so it shows what Eagle6Settings
-        // actually has, regardless of what ATAK's own default SharedPreferences file contains.
         (findPreference("pref_launch_radius") as? PanEditTextPreference)?.apply {
-            text = settings.launchZoneRadiusM.toString()
+            text = Eagle6Prefs.launchZoneRadiusM.toString()
             onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
                 val v = newVal.toString().toIntOrNull()
                 if (v == null || v !in 10..100) {
                     Toast.makeText(activity, "Launch zone radius must be 10–100 m.", Toast.LENGTH_SHORT).show()
                     false
                 } else {
-                    settings.launchZoneRadiusM = v
+                    Eagle6Prefs.launchZoneRadiusM = v
                     true
                 }
             }
         }
 
         (findPreference("pref_activity_radius") as? PanEditTextPreference)?.apply {
-            text = settings.activityZoneRadiusM.toString()
+            text = Eagle6Prefs.activityZoneRadiusM.toString()
             onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
                 val v = newVal.toString().toIntOrNull()
                 if (v == null || v !in 100..1000) {
                     Toast.makeText(activity, "Activity zone radius must be 100–1000 m.", Toast.LENGTH_SHORT).show()
                     false
                 } else {
-                    settings.activityZoneRadiusM = v
+                    Eagle6Prefs.activityZoneRadiusM = v
                     true
                 }
             }
