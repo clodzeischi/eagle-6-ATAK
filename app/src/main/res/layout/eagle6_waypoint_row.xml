@@ -19,7 +19,7 @@
         android:id="@+id/btn_remove_waypoint"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
-        android:text="✕"
+        android:text="@string/common_remove_waypoint"
         android:textSize="12sp"
         android:background="@drawable/btn_secondary"
         android:textColor="@color/e6_text_secondary"

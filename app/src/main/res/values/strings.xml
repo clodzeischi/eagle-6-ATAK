@@ -7,6 +7,7 @@
     <string name="common_add_waypoint">+ ADD WAYPOINT</string>
     <string name="common_map">MAP</string>
     <string name="common_self">SELF</string>
+    <string name="common_remove_waypoint">✕</string>
 
     <!-- New Mission Screen -->
     <string name="new_mission_title">NEW MISSION</string>
@@ -15,23 +16,65 @@
     <string name="new_mission_mission_type">MISSION TYPE</string>
     <string name="new_mission_launch_location">LAUNCH LOCATION (MGRS)</string>
     <string name="new_mission_waypoints">WAYPOINTS (optional)</string>
-
     <string name="new_mission_activity_location">ACTIVITY LOCATION (MGRS)</string>
     <string name="new_mission_altitude">ALTITUDE (ft AGL)</string>
     <string name="new_mission_duration">EXPECTED DURATION (min)</string>
     <string name="new_mission_launch">LAUNCH</string>
     <string name="new_mission_cancel">CANCEL</string>
+    <string name="new_mission_prompt_launch">Tap map to set launch location</string>
+    <string name="new_mission_prompt_activity">Tap map to set activity location</string>
+    <string name="new_mission_prompt_waypoint">Tap map to add waypoint</string>
+    <string name="new_mission_error_fill_fields">Please fill all fields.</string>
 
-    <!-- Missions Screen -->
+    <!-- Mission List Screen -->
     <string name="missions_title">EAGLE-6</string>
     <string name="missions_new_mission">NEW MISSION</string>
     <string name="missions_settings">SETTINGS</string>
     <string name="missions_empty">no active missions</string>
 
+    <!-- Mission Detail Screen -->
+    <string name="detail_title">MISSION</string>
+    <string name="detail_label_pilot">PILOT</string>
+    <string name="detail_label_platform">PLATFORM</string>
+    <string name="detail_label_type">TYPE</string>
+    <string name="detail_label_activity">ACTIVITY</string>
+    <string name="detail_action_mark_on_task">MARK ON TASK</string>
+    <string name="detail_action_retask_type">RETASK TYPE</string>
+    <string name="detail_action_retask_location">RETASK LOCATION</string>
+    <string name="detail_action_rth">RTH</string>
+    <string name="detail_prompt_activity">Tap map to set new activity location</string>
+
     <!-- Landing Screen -->
     <string name="landing_title">RETURN TO HOME</string>
-    <string name="landing_recovery_point">RECOVERY POINT"</string>
+    <string name="landing_recovery_point">RECOVERY POINT</string>
     <string name="landing_rth_waypoints">RTH WAYPOINTS (optional)</string>
     <string name="landing_land">LAND</string>
+    <string name="landing_pilot_platform">%1$s — %2$s</string>
+    <string name="landing_prompt_recovery">Tap map to set recovery point</string>
+    <string name="landing_prompt_waypoint">Tap map to add RTH waypoint</string>
+
+    <!-- Settings / Preferences -->
+    <string name="pref_category_general">General</string>
+    <string name="pref_pilots_title">Pilots</string>
+    <string name="pref_pilots_summary">Tap to manage pilot list</string>
+    <string name="pref_platforms_title">Platforms</string>
+    <string name="pref_platforms_summary">Tap to manage platform list</string>
+    <string name="pref_mission_types_title">Mission Types</string>
+    <string name="pref_mission_types_summary">Tap to manage mission type list</string>
+    <string name="pref_altitudes_title">Altitudes (ft AGL)</string>
+    <string name="pref_altitudes_summary">Tap to manage altitude list</string>
+    <string name="pref_category_zones">Zones</string>
+    <string name="pref_launch_radius_title">Launch/Recovery Zone Radius (m)</string>
+    <string name="pref_launch_radius_summary">10–100 m. Shown as pulsating circle on map.</string>
+    <string name="pref_activity_radius_title">Activity Zone Radius (m)</string>
+    <string name="pref_activity_radius_summary">100–1000 m. Shown as static circle on map.</string>
+    <string name="pref_category_communications">Communications</string>
+    <string name="pref_chat_rooms_title">TAK Chat Rooms</string>
+    <string name="pref_chat_rooms_summary">Tap to select rooms for log messages</string>
+    <string name="pref_category_logs">Logs</string>
+    <string name="pref_export_logs_title">Export Logs</string>
+    <string name="pref_export_logs_summary">Copy eagle6.log to device storage</string>
+    <string name="pref_erase_logs_title">Erase Logs</string>
+    <string name="pref_erase_logs_summary">Delete all local log entries</string>
 
 </resources>

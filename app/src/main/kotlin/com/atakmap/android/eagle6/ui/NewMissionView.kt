@@ -40,7 +40,7 @@ class NewMissionView(
 
     init {
         view.findViewById<Button>(R.id.btn_pick_launch).setOnClickListener {
-            onPickLocation("Tap map to set launch location") { pt ->
+            onPickLocation(pluginContext.getString(R.string.new_mission_prompt_launch)) { pt ->
                 launchLocation = pt
                 txtLaunchMgrs.text = MessageFormatter.toMgrs(pt)
             }
@@ -50,7 +50,7 @@ class NewMissionView(
             txtLaunchMgrs.text = MessageFormatter.toMgrs(launchLocation)
         }
         view.findViewById<Button>(R.id.btn_pick_activity).setOnClickListener {
-            onPickLocation("Tap map to set activity location") { pt ->
+            onPickLocation(pluginContext.getString(R.string.new_mission_prompt_activity)) { pt ->
                 activityLocation = pt
                 txtActivityMgrs.text = MessageFormatter.toMgrs(pt)
             }
@@ -60,7 +60,7 @@ class NewMissionView(
             txtActivityMgrs.text = MessageFormatter.toMgrs(activityLocation)
         }
         view.findViewById<Button>(R.id.btn_add_waypoint).setOnClickListener {
-            onPickLocation("Tap map to add waypoint") { pt ->
+            onPickLocation(pluginContext.getString(R.string.new_mission_prompt_waypoint)) { pt ->
                 waypoints.add(pt)
                 refreshWaypointList()
             }
@@ -112,7 +112,7 @@ class NewMissionView(
         val duration = editDuration.text.toString().toIntOrNull() ?: 60
 
         if (pilot.isBlank() || platform.isBlank() || missionType.isBlank()) {
-            Toast.makeText(pluginContext, "Please fill all fields.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(pluginContext, R.string.new_mission_error_fill_fields, Toast.LENGTH_SHORT).show()
             return
         }
 

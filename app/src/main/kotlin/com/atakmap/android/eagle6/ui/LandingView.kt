@@ -29,7 +29,7 @@ class LandingView(
 
     init {
         view.findViewById<Button>(R.id.btn_pick_landing).setOnClickListener {
-            onPickLocation("Tap map to set recovery point") { pt ->
+            onPickLocation(pluginContext.getString(R.string.landing_prompt_recovery)) { pt ->
                 landingLocation = pt
                 txtLandingMgrs.text = MessageFormatter.toMgrs(pt)
             }
@@ -39,7 +39,7 @@ class LandingView(
             txtLandingMgrs.text = MessageFormatter.toMgrs(landingLocation)
         }
         view.findViewById<Button>(R.id.btn_add_rtw_waypoint).setOnClickListener {
-            onPickLocation("Tap map to add RTH waypoint") { pt ->
+            onPickLocation(pluginContext.getString(R.string.landing_prompt_waypoint)) { pt ->
                 waypoints.add(pt)
                 refreshWaypoints()
             }
@@ -60,7 +60,7 @@ class LandingView(
         txtLandingMgrs.text = MessageFormatter.toMgrs(landingLocation)
         refreshWaypoints()
         view.findViewById<TextView>(R.id.landing_pilot_platform).text =
-            "${m.pilot} — ${m.platform}"
+            pluginContext.getString(R.string.landing_pilot_platform, m.pilot, m.platform)
     }
 
     private fun refreshWaypoints() {

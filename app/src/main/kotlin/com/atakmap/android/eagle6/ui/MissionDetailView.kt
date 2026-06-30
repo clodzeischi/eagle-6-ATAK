@@ -51,7 +51,7 @@ class MissionDetailView(
         when (m.status) {
             MissionStatus.LAUNCHING -> {
                 btnPrimaryAction.visibility = View.VISIBLE
-                btnPrimaryAction.text = "MARK ON TASK"
+                btnPrimaryAction.text = pluginContext.getString(R.string.detail_action_mark_on_task)
                 btnPrimaryAction.setOnClickListener { markOnTask() }
                 btnRetaskType.visibility = View.GONE
                 btnRetaskLocation.visibility = View.GONE
@@ -106,7 +106,7 @@ class MissionDetailView(
 
     private fun retaskLocation() {
         val m = mission ?: return
-        onPickLocation("Tap map to set new activity location") { pt ->
+        onPickLocation(pluginContext.getString(R.string.detail_prompt_activity)) { pt ->
             m.activityLocation = pt
             onMissionUpdated(m, MessageFormatter.retaskLocationMessage(m.pilot, MessageFormatter.toMgrs(pt), m.altitudeFt))
             txtActivityMgrs.text = MessageFormatter.toMgrs(pt)

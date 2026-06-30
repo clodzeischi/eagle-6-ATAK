@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.atakmap.android.gui.PanPreferenceCategory android:title="General">
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_general">
         <com.atakmap.android.gui.PanPreference
             android:key="pref_pilots"
-            android:title="Pilots"
-            android:summary="Tap to manage pilot list"/>
+            android:title="@string/pref_pilots_title"
+            android:summary="@string/pref_pilots_summary"/>
 
         <com.atakmap.android.gui.PanPreference
             android:key="pref_platforms"
-            android:title="Platforms"
-            android:summary="Tap to manage platform list"/>
+            android:title="@string/pref_platforms_title"
+            android:summary="@string/pref_platforms_summary"/>
 
         <com.atakmap.android.gui.PanPreference
             android:key="pref_mission_types"
-            android:title="Mission Types"
-            android:summary="Tap to manage mission type list"/>
+            android:title="@string/pref_mission_types_title"
+            android:summary="@string/pref_mission_types_summary"/>
 
         <com.atakmap.android.gui.PanPreference
             android:key="pref_altitudes"
-            android:title="Altitudes (ft AGL)"
-            android:summary="Tap to manage altitude list"/>
+            android:title="@string/pref_altitudes_title"
+            android:summary="@string/pref_altitudes_summary"/>
     </com.atakmap.android.gui.PanPreferenceCategory>
 
-    <com.atakmap.android.gui.PanPreferenceCategory android:title="Zones">
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_zones">
         <com.atakmap.android.gui.PanEditTextPreference
             android:key="pref_launch_radius"
-            android:title="Launch/Recovery Zone Radius (m)"
-            android:summary="10–100 m. Shown as pulsating circle on map."
-            android:dialogTitle="Launch/Recovery Zone Radius (m)"
+            android:title="@string/pref_launch_radius_title"
+            android:summary="@string/pref_launch_radius_summary"
+            android:dialogTitle="@string/pref_launch_radius_title"
             android:inputType="number"
             android:defaultValue="50"/>
 
         <com.atakmap.android.gui.PanEditTextPreference
             android:key="pref_activity_radius"
-            android:title="Activity Zone Radius (m)"
-            android:summary="100–1000 m. Shown as static circle on map."
-            android:dialogTitle="Activity Zone Radius (m)"
+            android:title="@string/pref_activity_radius_title"
+            android:summary="@string/pref_activity_radius_summary"
+            android:dialogTitle="@string/pref_activity_radius_title"
             android:inputType="number"
             android:defaultValue="300"/>
     </com.atakmap.android.gui.PanPreferenceCategory>
 
-    <com.atakmap.android.gui.PanPreferenceCategory android:title="Communications">
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_communications">
         <com.atakmap.android.gui.PanPreference
             android:key="pref_chat_rooms"
-            android:title="TAK Chat Rooms"
-            android:summary="Tap to select rooms for log messages"/>
+            android:title="@string/pref_chat_rooms_title"
+            android:summary="@string/pref_chat_rooms_summary"/>
     </com.atakmap.android.gui.PanPreferenceCategory>
 
-    <com.atakmap.android.gui.PanPreferenceCategory android:title="Logs">
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_logs">
         <com.atakmap.android.gui.PanPreference
             android:key="pref_export_logs"
-            android:title="Export Logs"
-            android:summary="Copy eagle6.log to device storage"/>
+            android:title="@string/pref_export_logs_title"
+            android:summary="@string/pref_export_logs_summary"/>
 
         <com.atakmap.android.gui.PanPreference
             android:key="pref_erase_logs"
-            android:title="Erase Logs"
-            android:summary="Delete all local log entries"/>
+            android:title="@string/pref_erase_logs_title"
+            android:summary="@string/pref_erase_logs_summary"/>
     </com.atakmap.android.gui.PanPreferenceCategory>
 
 </PreferenceScreen>
