@@ -27,16 +27,18 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         staticCtx = ctx
     }
 
+    private fun ps(id: Int): String = staticCtx!!.getString(id)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupListPref(
             key = "pref_pilots",
-            title = getString(R.string.pref_pilots_title),
+            title = ps(R.string.pref_pilots_title),
             getList = { Eagle6Prefs.pilots },
             saveList = { updated ->
                 if (updated.none { it == Eagle6Prefs.selfCallsign }) {
-                    Toast.makeText(activity, getString(R.string.pref_error_cannot_remove_callsign), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, ps(R.string.pref_error_cannot_remove_callsign), Toast.LENGTH_SHORT).show()
                     false
                 } else {
                     Eagle6Prefs.pilots = updated
@@ -47,11 +49,11 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
 
         setupListPref(
             key = "pref_platforms",
-            title = getString(R.string.pref_platforms_title),
+            title = ps(R.string.pref_platforms_title),
             getList = { Eagle6Prefs.platforms },
             saveList = { updated ->
                 if (updated.isEmpty()) {
-                    Toast.makeText(activity, getString(R.string.pref_error_platforms_empty), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, ps(R.string.pref_error_platforms_empty), Toast.LENGTH_SHORT).show()
                     false
                 } else {
                     Eagle6Prefs.platforms = updated
@@ -62,11 +64,11 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
 
         setupListPref(
             key = "pref_mission_types",
-            title = getString(R.string.pref_mission_types_title),
+            title = ps(R.string.pref_mission_types_title),
             getList = { Eagle6Prefs.missionTypes },
             saveList = { updated ->
                 if (updated.isEmpty()) {
-                    Toast.makeText(activity, getString(R.string.pref_error_mission_types_empty), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, ps(R.string.pref_error_mission_types_empty), Toast.LENGTH_SHORT).show()
                     false
                 } else {
                     Eagle6Prefs.missionTypes = updated
@@ -77,14 +79,14 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
 
         setupListPref(
             key = "pref_altitudes",
-            title = getString(R.string.pref_altitudes_title),
+            title = ps(R.string.pref_altitudes_title),
             getList = { Eagle6Prefs.altitudes },
             saveList = { updated ->
                 if (updated.isEmpty()) {
-                    Toast.makeText(activity, getString(R.string.pref_error_altitudes_empty), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, ps(R.string.pref_error_altitudes_empty), Toast.LENGTH_SHORT).show()
                     false
                 } else if (updated.any { it.toIntOrNull()?.let { v -> v < 0 } == true }) {
-                    Toast.makeText(activity, getString(R.string.pref_error_altitudes_negative), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, ps(R.string.pref_error_altitudes_negative), Toast.LENGTH_SHORT).show()
                     false
                 } else {
                     Eagle6Prefs.altitudes = updated
@@ -95,7 +97,7 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
 
         setupListPref(
             key = "pref_chat_rooms",
-            title = getString(R.string.pref_chat_rooms_title),
+            title = ps(R.string.pref_chat_rooms_title),
             getList = { Eagle6Prefs.chatRooms },
             saveList = { updated ->
                 Eagle6Prefs.chatRooms = updated
@@ -108,7 +110,7 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
             onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
                 val v = newVal.toString().toIntOrNull()
                 if (v == null || v !in 10..100) {
-                    Toast.makeText(activity, getString(R.string.pref_error_launch_radius_range), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, ps(R.string.pref_error_launch_radius_range), Toast.LENGTH_SHORT).show()
                     false
                 } else {
                     Eagle6Prefs.launchZoneRadiusM = v
@@ -122,7 +124,7 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
             onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newVal ->
                 val v = newVal.toString().toIntOrNull()
                 if (v == null || v !in 100..1000) {
-                    Toast.makeText(activity, getString(R.string.pref_error_activity_radius_range), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, ps(R.string.pref_error_activity_radius_range), Toast.LENGTH_SHORT).show()
                     false
                 } else {
                     Eagle6Prefs.activityZoneRadiusM = v
@@ -161,41 +163,41 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
         AlertDialog.Builder(ctx)
             .setTitle(title)
             .setMessage(display)
-            .setPositiveButton(getString(R.string.pref_list_btn_save)) { _, _ ->
+            .setPositiveButton(ps(R.string.pref_list_btn_save)) { _, _ ->
                 if (save(mutable)) onSaved(mutable)
             }
-            .setNeutralButton(getString(R.string.pref_list_btn_add)) { _, _ ->
+            .setNeutralButton(ps(R.string.pref_list_btn_add)) { _, _ ->
                 val input = EditText(ctx)
                 AlertDialog.Builder(ctx)
-                    .setTitle(getString(R.string.pref_list_dialog_add_item))
+                    .setTitle(ps(R.string.pref_list_dialog_add_item))
                     .setView(input)
-                    .setPositiveButton(getString(R.string.pref_list_btn_add)) { _, _ ->
+                    .setPositiveButton(ps(R.string.pref_list_btn_add)) { _, _ ->
                         val v = input.text.toString().trim()
                         when {
                             v.isEmpty() -> {}
-                            v.contains("||") -> Toast.makeText(ctx, getString(R.string.pref_error_value_contains_pipe), Toast.LENGTH_SHORT).show()
+                            v.contains("||") -> Toast.makeText(ctx, ps(R.string.pref_error_value_contains_pipe), Toast.LENGTH_SHORT).show()
                             else -> {
                                 mutable.add(v)
                                 showListEditor(title, mutable, save, onSaved)
                             }
                         }
                     }
-                    .setNegativeButton(getString(R.string.pref_list_btn_cancel), null)
+                    .setNegativeButton(ps(R.string.pref_list_btn_cancel), null)
                     .show()
             }
-            .setNegativeButton(getString(R.string.pref_list_btn_remove)) { _, _ ->
+            .setNegativeButton(ps(R.string.pref_list_btn_remove)) { _, _ ->
                 val arr = mutable.toTypedArray()
                 AlertDialog.Builder(ctx)
-                    .setTitle(getString(R.string.pref_list_dialog_remove_item))
+                    .setTitle(ps(R.string.pref_list_dialog_remove_item))
                     .setItems(arr) { _, idx ->
                         mutable.removeAt(idx)
                         showListEditor(title, mutable, save, onSaved)
                     }
-                    .setNegativeButton(getString(R.string.pref_list_btn_cancel), null)
+                    .setNegativeButton(ps(R.string.pref_list_btn_cancel), null)
                     .show()
             }
             .show()
     }
 
-    override fun getSubTitle(): String = getSubTitle(getString(R.string.pref_breadcrumb_tools), getString(R.string.pref_breadcrumb_eagle6))
+    override fun getSubTitle(): String = getSubTitle(ps(R.string.pref_breadcrumb_tools), ps(R.string.pref_breadcrumb_eagle6))
 }
