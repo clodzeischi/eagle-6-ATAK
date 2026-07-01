@@ -83,4 +83,26 @@
     <string name="pref_erase_logs_title">Erase Logs</string>
     <string name="pref_erase_logs_summary">Delete all local log entries</string>
 
+    <!-- Settings screen breadcrumbs -->
+    <string name="pref_breadcrumb_tools">Tool Preferences</string>
+    <string name="pref_breadcrumb_eagle6">Eagle-6 Preferences</string>
+
+    <!-- List editor dialog buttons and titles -->
+    <string name="pref_list_btn_save">Save</string>
+    <string name="pref_list_btn_add">Add</string>
+    <string name="pref_list_btn_remove">Remove</string>
+    <string name="pref_list_btn_cancel">Cancel</string>
+    <string name="pref_list_dialog_add_item">Add item</string>
+    <string name="pref_list_dialog_remove_item">Remove item</string>
+
+    <!-- List editor validation errors -->
+    <string name="pref_error_cannot_remove_callsign">Cannot remove your own callsign.</string>
+    <string name="pref_error_platforms_empty">Platforms list cannot be empty.</string>
+    <string name="pref_error_mission_types_empty">Mission types list cannot be empty.</string>
+    <string name="pref_error_altitudes_empty">Altitude list cannot be empty.</string>
+    <string name="pref_error_altitudes_negative">Altitudes cannot be negative.</string>
+    <string name="pref_error_value_contains_pipe">Value cannot contain \'||\'.</string>
+    <string name="pref_error_launch_radius_range">Launch zone radius must be 10–100 m.</string>
+    <string name="pref_error_activity_radius_range">Activity zone radius must be 100–1000 m.</string>
+
 </resources>
