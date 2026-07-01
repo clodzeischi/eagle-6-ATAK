@@ -16,16 +16,17 @@ import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.android.plugintemplate.plugin.R
 import com.atakmap.coremap.maps.coords.GeoPoint
 
-class NewMissionView(
+class MissionEditView(
     private val pluginContext: Context,
     private val selfLocation: () -> GeoPoint,
     private val onPickLocation: (prompt: String, callback: (GeoPoint) -> Unit) -> Unit,
     private val onPickLaunchTime: (callback: (Long) -> Unit) -> Unit,
-    private val onConfirm: (Mission) -> Unit,
-    private val onCancel: () -> Unit,
+    private val onSave: (original: Mission, updated: Mission) -> Unit,
+    private val onCancelMission: (Mission) -> Unit,
+    private val onBack: () -> Unit,
     private val onPreviewUpdate: (GeoPoint, List<GeoPoint>, GeoPoint, List<GeoPoint>, GeoPoint) -> Unit = { _, _, _, _, _ -> }
 ) {
-    val view: View = PluginLayoutInflater.inflate(pluginContext, R.layout.eagle6_new_mission, null)
+    val view: View = PluginLayoutInflater.inflate(pluginContext, R.layout.eagle6_mission_edit, null)
 
     private val spinPilot: Spinner = view.findViewById(R.id.spin_pilot)
     private val spinPlatform: Spinner = view.findViewById(R.id.spin_platform)
@@ -39,7 +40,8 @@ class NewMissionView(
     private val exfilContainer: LinearLayout = view.findViewById(R.id.exfil_waypoints_container)
     private val editDuration: EditText = view.findViewById(R.id.edit_duration)
 
-    private var launchTimeMs: Long? = null
+    private var original: Mission? = null
+    private var launchTimeMs: Long = 0L
     private var launchLocation: GeoPoint = selfLocation()
     private var activityLocation: GeoPoint = selfLocation()
     private var recoveryLocation: GeoPoint = selfLocation()
@@ -51,6 +53,7 @@ class NewMissionView(
     }
 
     init {
+        view.findViewById<Button>(R.id.btn_back).setOnClickListener { onBack() }
         view.findViewById<Button>(R.id.btn_pick_launch_time).setOnClickListener {
             onPickLaunchTime { ms ->
                 launchTimeMs = ms
@@ -105,31 +108,42 @@ class NewMissionView(
             txtRecoveryMgrs.text = MessageFormatter.toMgrs(recoveryLocation)
             notifyPreview()
         }
-        view.findViewById<Button>(R.id.btn_confirm).setOnClickListener { attemptConfirm() }
-        view.findViewById<Button>(R.id.btn_cancel).setOnClickListener { onCancel() }
+        view.findViewById<Button>(R.id.btn_save).setOnClickListener { attemptSave() }
+        view.findViewById<Button>(R.id.btn_cancel_mission).setOnClickListener {
+            original?.let { onCancelMission(it) }
+        }
     }
 
-    fun reset() {
-        bindSpinner(spinPilot, Eagle6Prefs.pilots, Eagle6Prefs.lastPilotIndex)
-        bindSpinner(spinPlatform, Eagle6Prefs.platforms, Eagle6Prefs.lastPlatformIndex)
-        bindSpinner(spinType, Eagle6Prefs.missionTypes, Eagle6Prefs.lastMissionTypeIndex)
-        bindSpinner(spinAltitude, Eagle6Prefs.altitudes, Eagle6Prefs.lastAltitudeIndex)
+    fun bind(mission: Mission) {
+        original = mission
 
-        val savedDuration = Eagle6Prefs.lastDurationMin
-        if (savedDuration > 0) editDuration.setText(savedDuration.toString()) else editDuration.text?.clear()
+        bindSpinner(spinPilot, Eagle6Prefs.pilots, Eagle6Prefs.pilots.indexOf(mission.pilot).coerceAtLeast(0))
+        bindSpinner(spinPlatform, Eagle6Prefs.platforms, Eagle6Prefs.platforms.indexOf(mission.platform).coerceAtLeast(0))
+        bindSpinner(spinType, Eagle6Prefs.missionTypes, Eagle6Prefs.missionTypes.indexOf(mission.missionType).coerceAtLeast(0))
+        bindSpinner(spinAltitude, Eagle6Prefs.altitudes, Eagle6Prefs.altitudes.indexOf(mission.altitudeFt).coerceAtLeast(0))
 
-        launchTimeMs = null
-        txtLaunchTime.text = pluginContext.getString(R.string.new_mission_no_launch_time)
-        launchLocation = selfLocation()
-        activityLocation = selfLocation()
-        recoveryLocation = selfLocation()
+        launchTimeMs = mission.launchTimeMs
+        txtLaunchTime.text = MessageFormatter.displayTime(mission.launchTimeMs)
+
+        launchLocation = mission.launchLocation
+        txtLaunchMgrs.text = MessageFormatter.toMgrs(mission.launchLocation)
+
+        activityLocation = mission.activityLocation
+        txtActivityMgrs.text = MessageFormatter.toMgrs(mission.activityLocation)
+
+        recoveryLocation = mission.recoveryLocation
+        txtRecoveryMgrs.text = MessageFormatter.toMgrs(mission.recoveryLocation)
+
         infilWaypoints.clear()
-        exfilWaypoints.clear()
-        txtLaunchMgrs.text = MessageFormatter.toMgrs(launchLocation)
-        txtActivityMgrs.text = MessageFormatter.toMgrs(activityLocation)
-        txtRecoveryMgrs.text = MessageFormatter.toMgrs(recoveryLocation)
+        infilWaypoints.addAll(mission.infilWaypoints)
         refreshWaypoints(infilContainer, infilWaypoints)
+
+        exfilWaypoints.clear()
+        exfilWaypoints.addAll(mission.exfilWaypoints)
         refreshWaypoints(exfilContainer, exfilWaypoints)
+
+        editDuration.setText(mission.expectedDurationMin.toString())
+        notifyPreview()
     }
 
     private fun bindSpinner(spinner: Spinner, items: List<String>, selectedIndex: Int) {
@@ -153,42 +167,33 @@ class NewMissionView(
         notifyPreview()
     }
 
-    private fun attemptConfirm() {
+    private fun attemptSave() {
+        val m = original ?: return
         val pilot = spinPilot.selectedItem?.toString()
         val platform = spinPlatform.selectedItem?.toString()
         val missionType = spinType.selectedItem?.toString()
         val altitude = spinAltitude.selectedItem?.toString()
         val duration = editDuration.text.toString().toIntOrNull()
-        val launchTime = launchTimeMs
 
         if (pilot.isNullOrBlank() || platform.isNullOrBlank() || missionType.isNullOrBlank()
-            || altitude.isNullOrBlank() || duration == null || duration <= 0 || launchTime == null) {
+            || altitude.isNullOrBlank() || duration == null || duration <= 0) {
             Toast.makeText(pluginContext, R.string.new_mission_error_fill_fields, Toast.LENGTH_SHORT).show()
             return
         }
 
-        Eagle6Prefs.saveLastSelections(
-            pilotIdx = spinPilot.selectedItemPosition,
-            platformIdx = spinPlatform.selectedItemPosition,
-            missionTypeIdx = spinType.selectedItemPosition,
-            altitudeIdx = spinAltitude.selectedItemPosition,
-            durationMin = duration
+        val updated = m.copy(
+            pilot = pilot,
+            platform = platform,
+            missionType = missionType,
+            launchTimeMs = launchTimeMs,
+            launchLocation = launchLocation,
+            infilWaypoints = infilWaypoints.toList(),
+            activityLocation = activityLocation,
+            exfilWaypoints = exfilWaypoints.toList(),
+            recoveryLocation = recoveryLocation,
+            altitudeFt = altitude,
+            expectedDurationMin = duration
         )
-
-        onConfirm(
-            Mission(
-                pilot = pilot,
-                platform = platform,
-                missionType = missionType,
-                launchTimeMs = launchTime,
-                launchLocation = launchLocation,
-                infilWaypoints = infilWaypoints.toList(),
-                activityLocation = activityLocation,
-                exfilWaypoints = exfilWaypoints.toList(),
-                recoveryLocation = recoveryLocation,
-                altitudeFt = altitude,
-                expectedDurationMin = duration
-            )
-        )
+        onSave(m, updated)
     }
 }

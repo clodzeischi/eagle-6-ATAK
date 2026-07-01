@@ -62,7 +62,7 @@ object Eagle6Prefs {
     val lastPlatformIndex: Int get() = prefs.getInt(KEY_LAST_PLATFORM, 0)
     val lastMissionTypeIndex: Int get() = prefs.getInt(KEY_LAST_MISSION_TYPE, 0)
     val lastAltitudeIndex: Int get() = prefs.getInt(KEY_LAST_ALTITUDE, 0)
-    val lastDurationMin: Int get() = prefs.getInt(KEY_LAST_DURATION, 60)
+    val lastDurationMin: Int get() = prefs.getInt(KEY_LAST_DURATION, 0)
 
     fun saveLastSelections(
         pilotIdx: Int,

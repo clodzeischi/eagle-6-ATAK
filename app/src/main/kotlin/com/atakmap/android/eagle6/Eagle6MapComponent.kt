@@ -7,6 +7,7 @@ import com.atakmap.android.dropdown.DropDownMapComponent
 import com.atakmap.android.eagle6.cot.Eagle6DetailHandler
 import com.atakmap.android.eagle6.map.ReceivedMissionRenderer
 import com.atakmap.android.eagle6.model.Eagle6Prefs
+import com.atakmap.android.eagle6.model.MissionStore
 import com.atakmap.android.eagle6.settings.Eagle6PreferenceFragment
 import com.atakmap.android.ipc.AtakBroadcast.DocumentedIntentFilter
 import com.atakmap.android.maps.MapView
@@ -21,6 +22,7 @@ class Eagle6MapComponent : DropDownMapComponent() {
     override fun onCreate(context: Context, intent: Intent, view: MapView) {
         context.setTheme(com.atakmap.android.plugintemplate.plugin.R.style.ATAKPluginTheme)
         Eagle6Prefs.init(context)
+        MissionStore.init(view.context)
         super.onCreate(context, intent, view)
         Eagle6Prefs.selfCallsign = view.selfMarker?.getMetaString("callsign", "UNKNOWN") ?: "UNKNOWN"
 

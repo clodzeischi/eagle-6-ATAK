@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/e6_bg">
+
+    <!-- Header bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/e6_surface"
+        android:paddingStart="8dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="@string/edit_back"
+            android:textSize="12sp"
+            android:background="@drawable/btn_secondary"
+            android:textColor="@color/e6_text_secondary"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="12dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/history_detail_title"
+            android:textColor="@color/e6_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"/>
+
+        <TextView
+            android:id="@+id/history_completed_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/e6_text_secondary"
+            android:textSize="12sp"
+            android:fontFamily="monospace"/>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="@color/e6_divider"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Pilot -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_pilot"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_pilot"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Platform -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_platform"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_platform"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Type -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_mission_type"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_type"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Launch time -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_launch_time"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_launch_time"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp" android:fontFamily="monospace"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Launch location -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_launch_location"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_launch"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp" android:fontFamily="monospace"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Activity location -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_activity_location"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_activity"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp" android:fontFamily="monospace"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Recovery location -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_recovery_location"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_recovery"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp" android:fontFamily="monospace"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Altitude -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_altitude"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_altitude"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/e6_divider"/>
+
+            <!-- Duration -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:layout_width="120dp" android:layout_height="wrap_content"
+                    android:text="@string/new_mission_duration"
+                    android:textColor="@color/e6_text_secondary" android:textSize="12sp"
+                    android:letterSpacing="0.08"/>
+                <TextView android:id="@+id/history_duration"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:textColor="@color/e6_text_primary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

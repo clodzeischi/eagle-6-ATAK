@@ -14,16 +14,22 @@
     <string name="new_mission_pilot">PILOT</string>
     <string name="new_mission_platform">PLATFORM</string>
     <string name="new_mission_mission_type">MISSION TYPE</string>
+    <string name="new_mission_launch_time">LAUNCH TIME (UTC)</string>
+    <string name="new_mission_no_launch_time">Set time…</string>
     <string name="new_mission_launch_location">LAUNCH LOCATION (MGRS)</string>
-    <string name="new_mission_waypoints">WAYPOINTS (optional)</string>
+    <string name="new_mission_infil_waypoints">INFIL WAYPOINTS (optional)</string>
     <string name="new_mission_activity_location">ACTIVITY LOCATION (MGRS)</string>
+    <string name="new_mission_exfil_waypoints">EXFIL WAYPOINTS (optional)</string>
+    <string name="new_mission_recovery_location">RECOVERY LOCATION (MGRS)</string>
     <string name="new_mission_altitude">ALTITUDE (ft AGL)</string>
     <string name="new_mission_duration">EXPECTED DURATION (min)</string>
-    <string name="new_mission_launch">LAUNCH</string>
+    <string name="new_mission_confirm">CONFIRM</string>
     <string name="new_mission_cancel">CANCEL</string>
     <string name="new_mission_prompt_launch">Tap map to set launch location</string>
     <string name="new_mission_prompt_activity">Tap map to set activity location</string>
-    <string name="new_mission_prompt_waypoint">Tap map to add waypoint</string>
+    <string name="new_mission_prompt_infil_waypoint">Tap map to add infil waypoint</string>
+    <string name="new_mission_prompt_exfil_waypoint">Tap map to add exfil waypoint</string>
+    <string name="new_mission_prompt_recovery">Tap map to set recovery location</string>
     <string name="new_mission_error_fill_fields">Please fill all fields.</string>
 
     <!-- Mission List Screen -->
@@ -32,32 +38,20 @@
     <string name="missions_settings">SETTINGS</string>
     <string name="missions_empty">no active missions</string>
 
-    <!-- Mission Detail Screen -->
-    <string name="detail_title">MISSION</string>
-    <string name="detail_label_pilot">PILOT</string>
-    <string name="detail_label_platform">PLATFORM</string>
-    <string name="detail_label_type">TYPE</string>
-    <string name="detail_label_activity">ACTIVITY</string>
-    <string name="detail_action_back">← BACK</string>
-    <string name="detail_action_mark_on_task">MARK ON TASK</string>
-    <string name="detail_action_retask_type">RETASK TYPE</string>
-    <string name="detail_action_retask_location">RETASK LOCATION</string>
-    <string name="detail_action_rth">RTH</string>
-    <string name="detail_action_cancel_mission">CANCEL MISSION</string>
-    <string name="detail_prompt_activity">Tap map to set new activity location</string>
-    <string name="msg_mission_aborted">Mission aborted.</string>
+    <!-- Mission status labels -->
+    <string name="status_active">active</string>
+    <string name="status_complete">complete</string>
 
-    <!-- Landing Screen -->
-    <string name="landing_title">RETURN TO HOME</string>
-    <string name="landing_recovery_point">RECOVERY POINT</string>
-    <string name="landing_rth_waypoints">RTH WAYPOINTS (optional)</string>
-    <string name="landing_land">LAND</string>
-    <string name="landing_pilot_platform">%1$s — %2$s</string>
-    <string name="landing_prompt_recovery">Tap map to set recovery point</string>
-    <string name="landing_prompt_waypoint">Tap map to add RTH waypoint</string>
+    <!-- Mission Edit Screen -->
+    <string name="edit_mission_title">MISSION</string>
+    <string name="edit_save">SAVE</string>
+    <string name="edit_cancel_mission">CANCEL MISSION</string>
+    <string name="edit_back">← BACK</string>
 
-    <!-- Common actions -->
-    <string name="common_cancel_rth">CANCEL RTH</string>
+    <!-- Mission History -->
+    <string name="history_title">COMPLETED</string>
+    <string name="history_clear">CLEAR COMPLETE</string>
+    <string name="history_detail_title">COMPLETED MISSION</string>
 
     <!-- Settings / Preferences -->
     <string name="pref_category_general">General</string>
@@ -77,25 +71,16 @@
     <string name="pref_category_communications">Communications</string>
     <string name="pref_chat_rooms_title">TAK Chat Rooms</string>
     <string name="pref_chat_rooms_summary">Tap to select rooms for log messages</string>
-    <string name="pref_category_logs">Logs</string>
-    <string name="pref_export_logs_title">Export Logs</string>
-    <string name="pref_export_logs_summary">Copy eagle6.log to device storage</string>
-    <string name="pref_erase_logs_title">Erase Logs</string>
-    <string name="pref_erase_logs_summary">Delete all local log entries</string>
 
-    <!-- Settings screen breadcrumbs -->
+    <!-- Settings list editor -->
     <string name="pref_breadcrumb_tools">Tool Preferences</string>
     <string name="pref_breadcrumb_eagle6">Eagle-6 Preferences</string>
-
-    <!-- List editor dialog buttons and titles -->
     <string name="pref_list_btn_save">Save</string>
     <string name="pref_list_btn_add">Add</string>
     <string name="pref_list_btn_remove">Remove</string>
     <string name="pref_list_btn_cancel">Cancel</string>
     <string name="pref_list_dialog_add_item">Add item</string>
     <string name="pref_list_dialog_remove_item">Remove item</string>
-
-    <!-- List editor validation errors -->
     <string name="pref_error_cannot_remove_callsign">Cannot remove your own callsign.</string>
     <string name="pref_error_platforms_empty">Platforms list cannot be empty.</string>
     <string name="pref_error_mission_types_empty">Mission types list cannot be empty.</string>

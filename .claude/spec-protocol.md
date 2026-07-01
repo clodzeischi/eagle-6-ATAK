@@ -2,79 +2,101 @@
 
 ## Outbound events
 
-Every mission state change fires two things in parallel:
-1. A **COT event** to the TAK server.
-2. A **chat message** to all configured TAK chat rooms.
-3. A **local log entry** appended to the EUD's `.log` file.
+Every mission event fires a **chat message** to all configured TAK chat rooms. The same string is recorded in the mission's SQLite row (via timestamps — the message text is derived from stored data, not stored separately).
 
-The chat message text and the `__eagle-detail` message field are identical strings (the human-readable log line).
+> **COT schema is deferred.** COT output is pending coordination with Maven Smart System. Do not implement COT until the schema is confirmed. The inbound rendering spec at the bottom of this file remains a design target for when COT is ready.
 
-### COT schema
+There is no local `.log` file. SQLite is the single source of truth for mission history.
 
-```xml
-<event version="2.0"
-       uid="EAGLE6-{missionId}-{eventSequence}"
-       type="a-f-A-M-H-Q"
-       time="{now ISO8601}"
-       start="{now ISO8601}"
-       stale="{now + 60min ISO8601}"
-       how="h-g-i-g-o">
-  <point lat="{lat}" lon="{lon}" hae="{hae}" ce="9999999" le="9999999"/>
-  <detail>
-    <__eagle-detail message="{human-readable log line}" />
-  </detail>
-</event>
+---
+
+## Chat message formats
+
+All timestamps are UTC in `HH:mm` format followed by `Z`.
+
+### Planned
+Fires when operator confirms a new mission.
+
+```
+{HH:mm}Z: {pilot} planned {platform} {missionType} at {activityLocation}, launching at {launchTime}Z.
+```
+Example:
+```
+14:30Z: PHOENIX-26 planned Skydio SURVEY at 14J QP 44191 54429, launching at 06:00Z.
 ```
 
-**Key decisions:**
-- Type `a-f-A-M-H-Q`: friendly air / military helicopter-class UAS (SIDC-compatible).
-- Stale time: **always 60 minutes from send time**. This ensures map icons expire automatically if the EUD reboots mid-mission; do not allow icons to persist indefinitely.
-- `<point>` location is event-specific (see table below).
-- The `<detail>` child `<__eagle-detail>` carries the structured message for Eagle-6 consumers. Standard TAK clients without Eagle-6 see only the SIDC icon; Eagle-6 clients parse this detail for full graphics.
-- Standard COT fields (location, altitude, time) remain in the header for potential Maven Smart System parsing downstream.
+### Launching
+Fires when the 1-minute tick crosses `launchTime` while the plugin is open.
 
-### COT location by event type
+```
+{HH:mm}Z: {pilot} launching {platform} {missionType} at {activityLocation}.
+```
+Example:
+```
+06:00Z: PHOENIX-26 launching Skydio SURVEY at 14J QP 44191 54429.
+```
 
-| Event | `<point>` location |
-|---|---|
-| Launch | Launch location |
-| ON TASK | Activity location |
-| Retask location | New activity location |
-| RTH initiated | Current activity location |
-| Landed | Recovery/landing location |
+### Complete
+Fires when the 1-minute tick crosses `launchTime + duration` while the plugin is open. Also fires immediately when an edit causes `launchTime + duration` to fall in the past (the "changed" message is suppressed — only "complete" is sent).
 
-### Chat API
+```
+{HH:mm}Z: {pilot} {platform} {missionType} complete.
+```
+Example:
+```
+06:23Z: PHOENIX-26 Skydio SURVEY complete.
+```
 
-Use native ATAK chat API (intent-based). Details TBD when implementing chat — do not assume a specific intent action until confirmed against the SDK.
+### Cancelled
+Fires when the operator taps `CANCEL MISSION` in Mission Edit. Mission is deleted from SQLite immediately after sending — no history entry is kept.
 
-### Log file
+```
+{HH:mm}Z: {pilot} {launchTime}Z {missionType} cancelled.
+```
+Example:
+```
+14:35Z: PHOENIX-26 06:00Z SURVEY cancelled.
+```
 
-Append each human-readable log line (with timestamp) to a `.log` file in the plugin's private storage, accessible via the Settings export action to sdcard.
+### Changed
+Fires when the operator saves edits to an existing mission. Sends full mission context regardless of how many fields changed. Not sent if the edit results in `launchTime + duration` being in the past (send "complete" instead).
+
+```
+{HH:mm}Z: {pilot} changed {platform} {missionType} to {activityLocation}, launching at {launchTime}Z.
+```
+Example:
+```
+14:40Z: PHOENIX-26 changed DJI Air3 SURVEY to 14J QP 44191 54400, launching at 05:30Z.
+```
+
+---
+
+## Message delivery rules
+
+Messages are sent synchronously on their trigger event — there is no background scheduler. Time-based messages (launching, complete) require the plugin to be running. If the plugin is closed, those messages do not fire.
+
+To prevent duplicate firing across tick intervals, use `launched_at` and `completed_at` timestamp fields in SQLite as sent-flags. If the field is non-null, the message has already fired — skip it on subsequent ticks.
 
 ---
 
 ## Inbound COT — received mission rendering
 
-Eagle-6 listens for incoming COT events that contain a `<__eagle-detail>` child. When detected:
+> **Deferred pending COT schema finalization with Maven Smart System.**
 
-### For non-Eagle-6 participants
-They receive the standard COT and render a normal friendly UAS SIDC icon with the 60-min stale time. No Eagle-6-specific rendering occurs on their device.
+The following is a design target, not yet implemented.
 
-### For Eagle-6 participants
-
-Parse the `<__eagle-detail>` message to extract mission context, then draw full mission graphics on the ATAK `MapView`:
-
-#### Graphics elements
+### Graphics elements
 
 | Element | Shape | Style |
 |---|---|---|
 | Launch / recovery zone | Small circle (radius from Settings: 10–100 m) | Light blue, transparent fill, pulsating opacity |
 | Activity area | Larger circle (radius from Settings: 100–1000 m) | Light blue, transparent fill, static |
-| Route | Dashed polyline | Light blue |
+| Infil route | Dashed polyline | Light blue |
+| Exfil route | Dashed polyline | Light blue |
 
-**Route path:** launch → waypoint₁ → waypoint₂ → … → activity location → … → waypoint₂ → waypoint₁ → recovery/landing zone. (The route is drawn both outbound and return, forming a closed loop.)
+Route path: launch → infilWaypoints → activity → exfilWaypoints → recovery.
 
-#### Pulsating animation
+### Pulsating animation
 
 The launch/recovery zone circle pulses using a sine-wave driven opacity:
 
@@ -82,16 +104,15 @@ The launch/recovery zone circle pulses using a sine-wave driven opacity:
 opacity(t) = alpha_min + (alpha_max - alpha_min) * (sin(2π * t / period) + 1) / 2
 ```
 
-- Target: 60 fps rendering loop.
-- Implement via `ValueAnimator` (repeat `INFINITE`, `REVERSE`) driving the map overlay item's alpha — avoids a manual `Handler` loop and integrates with Android's `Choreographer`.
-- The activity area circle does **not** pulse — it is static.
+- Implement via `ValueAnimator` (repeat `INFINITE`, `REVERSE`) driving the map overlay item's alpha.
+- The activity area circle does not pulse — it is static.
 
-#### Stale / cleanup
+### Cleanup
 
-Schedule removal of all rendered graphics when the COT stale time is reached (60 min from the event's `stale` attribute). If a subsequent COT event with the same `uid` arrives before stale, refresh/update the graphics and reset the cleanup timer.
+Map graphics are cleared when the mission reaches `launchTime + duration` (the "complete" event).
 
-#### Implementation notes
+All overlays for a single mission grouped under a single `MapGroup` keyed by mission UUID for bulk removal.
 
-- All map overlays for a single mission should be grouped under a single `MapGroup` keyed by mission UID for easy bulk removal on stale/landing.
-- The 60fps `ValueAnimator` is per-animation, not a global clock — let Android manage frame timing.
-- Parse MGRS ↔ lat/lon using ATAK's built-in utilities (available in the SDK); do not bring in a third-party MGRS library.
+### Non-Eagle-6 participants
+
+They receive the standard COT and render a normal friendly UAS SIDC icon. No Eagle-6-specific rendering occurs on their device.

@@ -21,27 +21,40 @@
             android:textStyle="bold" />
 
         <!-- Pilot -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_pilot" />
+        <TextView style="@style/E6Label" android:text="@string/new_mission_pilot" />
         <Spinner android:id="@+id/spin_pilot" style="@style/E6Spinner"/>
 
         <!-- Platform -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_platform" />
+        <TextView style="@style/E6Label" android:text="@string/new_mission_platform" />
         <Spinner android:id="@+id/spin_platform" style="@style/E6Spinner"/>
 
         <!-- Mission type -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_mission_type" />
+        <TextView style="@style/E6Label" android:text="@string/new_mission_mission_type" />
         <Spinner android:id="@+id/spin_mission_type" style="@style/E6Spinner"/>
 
+        <!-- Launch time -->
+        <TextView style="@style/E6Label" android:text="@string/new_mission_launch_time" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/txt_launch_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:textColor="@color/e6_text_primary"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_pick_launch_time"
+                style="@style/E6IconBtn"
+                android:text="SET" />
+        </LinearLayout>
+
         <!-- Launch location -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_launch_location" />
+        <TextView style="@style/E6Label" android:text="@string/new_mission_launch_location" />
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
             android:layout_marginBottom="12dp">
@@ -55,29 +68,21 @@
                 android:textColor="@color/e6_text_primary"
                 android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/btn_pick_launch"
-                style="@style/E6IconBtn"
+            <Button android:id="@+id/btn_pick_launch" style="@style/E6IconBtn"
                 android:text="@string/common_map" />
-
-            <Button
-                android:id="@+id/btn_reset_launch"
-                style="@style/E6IconBtn"
+            <Button android:id="@+id/btn_reset_launch" style="@style/E6IconBtn"
                 android:text="@string/common_self" />
         </LinearLayout>
 
-        <!-- Waypoints -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_waypoints" />
+        <!-- Infil waypoints -->
+        <TextView style="@style/E6Label" android:text="@string/new_mission_infil_waypoints" />
         <LinearLayout
-            android:id="@+id/waypoints_container"
+            android:id="@+id/infil_waypoints_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
-
         <Button
-            android:id="@+id/btn_add_waypoint"
+            android:id="@+id/btn_add_infil_waypoint"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginBottom="12dp"
@@ -87,9 +92,7 @@
             android:textSize="14sp" />
 
         <!-- Activity location -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_activity_location" />
+        <TextView style="@style/E6Label" android:text="@string/new_mission_activity_location" />
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
             android:layout_marginBottom="12dp">
@@ -103,28 +106,56 @@
                 android:textColor="@color/e6_text_primary"
                 android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/btn_pick_activity"
-                style="@style/E6IconBtn"
+            <Button android:id="@+id/btn_pick_activity" style="@style/E6IconBtn"
                 android:text="@string/common_map" />
+            <Button android:id="@+id/btn_reset_activity" style="@style/E6IconBtn"
+                android:text="@string/common_self" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_reset_activity"
-                style="@style/E6IconBtn"
+        <!-- Exfil waypoints -->
+        <TextView style="@style/E6Label" android:text="@string/new_mission_exfil_waypoints" />
+        <LinearLayout
+            android:id="@+id/exfil_waypoints_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+        <Button
+            android:id="@+id/btn_add_exfil_waypoint"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/btn_secondary"
+            android:text="@string/common_add_waypoint"
+            android:textColor="@color/e6_text_secondary"
+            android:textSize="14sp" />
+
+        <!-- Recovery location -->
+        <TextView style="@style/E6Label" android:text="@string/new_mission_recovery_location" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/txt_recovery_mgrs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:textColor="@color/e6_text_primary"
+                android:textSize="16sp" />
+
+            <Button android:id="@+id/btn_pick_recovery" style="@style/E6IconBtn"
+                android:text="@string/common_map" />
+            <Button android:id="@+id/btn_reset_recovery" style="@style/E6IconBtn"
                 android:text="@string/common_self" />
         </LinearLayout>
 
         <!-- Altitude -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_altitude" />
+        <TextView style="@style/E6Label" android:text="@string/new_mission_altitude" />
         <Spinner android:id="@+id/spin_altitude" style="@style/E6Spinner"/>
 
         <!-- Duration -->
-        <TextView
-            style="@style/E6Label"
-            android:text="@string/new_mission_duration" />
-
+        <TextView style="@style/E6Label" android:text="@string/new_mission_duration" />
         <EditText
             android:id="@+id/edit_duration"
             android:layout_width="match_parent"
@@ -135,13 +166,13 @@
             android:textColor="@color/e6_text_primary"
             android:textSize="16sp" />
 
-        <!-- Launch / Cancel -->
+        <!-- Confirm / Cancel -->
         <Button
-            android:id="@+id/btn_launch"
+            android:id="@+id/btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/btn_primary"
-            android:text="@string/new_mission_launch"
+            android:text="@string/new_mission_confirm"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="bold" />

@@ -48,16 +48,5 @@
             android:summary="@string/pref_chat_rooms_summary"/>
     </com.atakmap.android.gui.PanPreferenceCategory>
 
-    <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_logs">
-        <com.atakmap.android.gui.PanPreference
-            android:key="pref_export_logs"
-            android:title="@string/pref_export_logs_title"
-            android:summary="@string/pref_export_logs_summary"/>
-
-        <com.atakmap.android.gui.PanPreference
-            android:key="pref_erase_logs"
-            android:title="@string/pref_erase_logs_title"
-            android:summary="@string/pref_erase_logs_summary"/>
-    </com.atakmap.android.gui.PanPreferenceCategory>
 
 </PreferenceScreen>

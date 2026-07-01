@@ -1,31 +1,24 @@
 package com.atakmap.android.eagle6.model
 
+import android.content.Context
+
 object MissionStore {
 
-    private val _missions = mutableListOf<Mission>()
+    private lateinit var db: MissionDatabase
     private val listeners = mutableListOf<() -> Unit>()
 
-    val missions: List<Mission> get() = _missions.toList()
-
-    fun add(mission: Mission) {
-        _missions.add(mission)
-        notifyListeners()
+    fun init(context: Context) {
+        db = MissionDatabase(context)
     }
 
-    fun update(mission: Mission) {
-        val idx = _missions.indexOfFirst { it.id == mission.id }
-        if (idx >= 0) {
-            _missions[idx] = mission
-            notifyListeners()
-        }
-    }
+    val activeMissions: List<Mission> get() = db.queryActive()
+    val completedMissions: List<Mission> get() = db.queryCompleted()
 
-    fun remove(id: String) {
-        _missions.removeAll { it.id == id }
-        notifyListeners()
-    }
-
-    fun get(id: String): Mission? = _missions.find { it.id == id }
+    fun add(mission: Mission) { db.insert(mission); notifyListeners() }
+    fun update(mission: Mission) { db.update(mission); notifyListeners() }
+    fun remove(id: String) { db.delete(id); notifyListeners() }
+    fun get(id: String): Mission? = db.queryById(id)
+    fun clearCompleted() { db.deleteCompleted(); notifyListeners() }
 
     fun addListener(listener: () -> Unit) = listeners.add(listener)
     fun removeListener(listener: () -> Unit) = listeners.remove(listener)
