@@ -9,7 +9,7 @@ import android.os.Looper
 import com.atakmap.android.dropdown.DropDown.OnStateListener
 import com.atakmap.android.dropdown.DropDownReceiver
 import com.atakmap.android.eagle6.chat.ChatSender
-import com.atakmap.android.eagle6.cot.MessageFormatter
+import com.atakmap.android.eagle6.chat.MessageFormatter
 import com.atakmap.android.eagle6.map.LocationPickerTool
 import com.atakmap.android.eagle6.map.PlanningPreviewRenderer
 import com.atakmap.android.eagle6.model.Eagle6Prefs

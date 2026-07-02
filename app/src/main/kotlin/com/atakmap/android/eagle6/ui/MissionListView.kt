@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.atak.plugins.impl.PluginLayoutInflater
-import com.atakmap.android.eagle6.cot.MessageFormatter
+import com.atakmap.android.eagle6.chat.MessageFormatter
 import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.android.eagle6.model.MissionStore
 import com.atakmap.android.plugintemplate.plugin.R

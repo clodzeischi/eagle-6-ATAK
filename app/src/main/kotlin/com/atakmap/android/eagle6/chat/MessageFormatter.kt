@@ -1,4 +1,4 @@
-package com.atakmap.android.eagle6.cot
+package com.atakmap.android.eagle6.chat
 
 import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.model.Mission

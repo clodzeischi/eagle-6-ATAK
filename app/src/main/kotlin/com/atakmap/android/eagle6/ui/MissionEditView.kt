@@ -10,7 +10,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.atak.plugins.impl.PluginLayoutInflater
-import com.atakmap.android.eagle6.cot.MessageFormatter
+import com.atakmap.android.eagle6.chat.MessageFormatter
 import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.android.plugintemplate.plugin.R

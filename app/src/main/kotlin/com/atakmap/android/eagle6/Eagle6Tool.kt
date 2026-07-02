@@ -9,6 +9,6 @@ class Eagle6Tool(context: Context) : AbstractPluginTool(
     context,
     context.getString(R.string.app_name),
     context.getString(R.string.app_name),
-    context.resources.getDrawable(R.drawable.ic_launcher) as Drawable,
+    context.resources.getDrawable(R.drawable.logo) as Drawable,
     Eagle6DropDownReceiver.SHOW_PLUGIN
 )
