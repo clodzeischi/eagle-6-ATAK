@@ -174,7 +174,8 @@ class Eagle6DropDownReceiver(
     // ---- Date/time picker ----
 
     private fun showDateTimePicker(callback: (Long) -> Unit) {
-        val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val tz = if (Eagle6Prefs.useZuluTime) TimeZone.getTimeZone("UTC") else TimeZone.getDefault()
+        val cal = Calendar.getInstance(tz)
         DatePickerDialog(
             mapView.context,
             { _, year, month, day ->

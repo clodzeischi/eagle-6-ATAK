@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.atakmap.android.eagle6.chat.ChatRoomManager
 import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.gui.PanEditTextPreference
+import com.atakmap.android.gui.PanSwitchPreference
 import com.atakmap.android.plugintemplate.plugin.R
 import com.atakmap.android.preference.PluginPreferenceFragment
 
@@ -32,6 +33,19 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (findPreference("pref_use_zulu_time") as? PanSwitchPreference)?.apply {
+            isChecked = Eagle6Prefs.useZuluTime
+            summary = if (Eagle6Prefs.useZuluTime) ps(R.string.pref_use_zulu_time_summary_on)
+                      else ps(R.string.pref_use_zulu_time_summary_off)
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { pref, newVal ->
+                val zulu = newVal as Boolean
+                Eagle6Prefs.useZuluTime = zulu
+                pref.summary = if (zulu) ps(R.string.pref_use_zulu_time_summary_on)
+                               else ps(R.string.pref_use_zulu_time_summary_off)
+                true
+            }
+        }
 
         setupListPref(
             key = "pref_pilots",

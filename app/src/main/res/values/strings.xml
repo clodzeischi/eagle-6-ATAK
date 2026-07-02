@@ -14,7 +14,7 @@
     <string name="new_mission_pilot">PILOT</string>
     <string name="new_mission_platform">PLATFORM</string>
     <string name="new_mission_mission_type">MISSION TYPE</string>
-    <string name="new_mission_launch_time">LAUNCH TIME (UTC)</string>
+    <string name="new_mission_launch_time">LAUNCH TIME</string>
     <string name="new_mission_no_launch_time">Set time…</string>
     <string name="new_mission_launch_location">LAUNCH LOCATION (MGRS)</string>
     <string name="new_mission_infil_waypoints">INFIL WAYPOINTS (optional)</string>
@@ -68,6 +68,10 @@
     <string name="pref_launch_radius_summary">10–100 m. Shown as pulsating circle on map.</string>
     <string name="pref_activity_radius_title">Activity Zone Radius (m)</string>
     <string name="pref_activity_radius_summary">100–1000 m. Shown as static circle on map.</string>
+    <string name="pref_category_display">Display</string>
+    <string name="pref_use_zulu_time_title">Use ZULU Time</string>
+    <string name="pref_use_zulu_time_summary_on">Times shown in UTC (ZULU / Z)</string>
+    <string name="pref_use_zulu_time_summary_off">Times shown in local time (Juliet / J)</string>
     <string name="pref_category_communications">Communications</string>
     <string name="pref_chat_room_name_title">Chat Room Name</string>
     <string name="pref_chat_room_name_summary">TAK chat room where mission messages are broadcast</string>

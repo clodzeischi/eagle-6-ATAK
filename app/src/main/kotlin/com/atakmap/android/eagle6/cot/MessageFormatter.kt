@@ -1,5 +1,6 @@
 package com.atakmap.android.eagle6.cot
 
+import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.coremap.conversions.CoordinateFormat
 import com.atakmap.coremap.conversions.CoordinateFormatUtilities
@@ -11,16 +12,17 @@ import java.util.TimeZone
 
 object MessageFormatter {
 
-    private val TIME_FMT = SimpleDateFormat("HH:mm", Locale.US).apply {
-        timeZone = TimeZone.getTimeZone("UTC")
-    }
-    private val DISPLAY_FMT = SimpleDateFormat("dd MMM HH:mm'Z'", Locale.US).apply {
-        timeZone = TimeZone.getTimeZone("UTC")
-    }
+    private fun tz(): TimeZone =
+        if (Eagle6Prefs.useZuluTime) TimeZone.getTimeZone("UTC") else TimeZone.getDefault()
 
-    fun timeStr(): String = "${TIME_FMT.format(Date())}Z"
-    fun timeStr(ms: Long): String = "${TIME_FMT.format(Date(ms))}Z"
-    fun displayTime(ms: Long): String = DISPLAY_FMT.format(Date(ms))
+    private fun suffix(): String = if (Eagle6Prefs.useZuluTime) "Z" else "J"
+
+    private fun timeFmt() = SimpleDateFormat("HH:mm", Locale.US).apply { timeZone = tz() }
+    private fun displayFmt() = SimpleDateFormat("dd MMM HH:mm", Locale.US).apply { timeZone = tz() }
+
+    fun timeStr(): String = "${timeFmt().format(Date())}${suffix()}"
+    fun timeStr(ms: Long): String = "${timeFmt().format(Date(ms))}${suffix()}"
+    fun displayTime(ms: Long): String = "${displayFmt().format(Date(ms))}${suffix()}"
 
     fun toMgrs(point: GeoPoint): String =
         CoordinateFormatUtilities.formatToShortString(point, CoordinateFormat.MGRS)

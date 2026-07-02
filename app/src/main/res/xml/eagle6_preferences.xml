@@ -23,6 +23,13 @@
             android:summary="@string/pref_altitudes_summary"/>
     </com.atakmap.android.gui.PanPreferenceCategory>
 
+    <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_display">
+        <com.atakmap.android.gui.PanSwitchPreference
+            android:key="pref_use_zulu_time"
+            android:title="@string/pref_use_zulu_time_title"
+            android:defaultValue="true"/>
+    </com.atakmap.android.gui.PanPreferenceCategory>
+
     <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_zones">
         <com.atakmap.android.gui.PanEditTextPreference
             android:key="pref_launch_radius"

@@ -53,6 +53,10 @@ object Eagle6Prefs {
             )
         } }
 
+    var useZuluTime: Boolean
+        get() = prefs.getBoolean(KEY_USE_ZULU_TIME, true)
+        set(value) { prefs.edit(commit = true) { putBoolean(KEY_USE_ZULU_TIME, value) } }
+
     var chatRoomName: String
         get() = prefs.getString(KEY_CHAT_ROOM_NAME, DEFAULT_CHAT_ROOM) ?: DEFAULT_CHAT_ROOM
         set(value) { prefs.edit(commit = true) { putString(KEY_CHAT_ROOM_NAME, value) } }
@@ -99,6 +103,7 @@ object Eagle6Prefs {
     const val KEY_ALTITUDES = "eagle6_altitudes"
     const val KEY_LAUNCH_RADIUS = "eagle6_launch_radius"
     const val KEY_ACTIVITY_RADIUS = "eagle6_activity_radius"
+    private const val KEY_USE_ZULU_TIME = "eagle6_use_zulu_time"
     const val KEY_CHAT_ROOM_NAME = "eagle6_chat_room_name"
     const val DEFAULT_CHAT_ROOM = "uas-coordination"
     private const val KEY_LAST_PILOT = "eagle6_last_pilot_idx"
