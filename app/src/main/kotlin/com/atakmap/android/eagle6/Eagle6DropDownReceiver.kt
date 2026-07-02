@@ -253,7 +253,7 @@ class Eagle6DropDownReceiver(
     // ---- Helpers ----
 
     private fun sendChat(message: String) {
-        chatSender.sendToRooms(message, Eagle6Prefs.chatRooms)
+        chatSender.send(message, Eagle6Prefs.chatRoomName)
     }
 
     private fun goHome() {

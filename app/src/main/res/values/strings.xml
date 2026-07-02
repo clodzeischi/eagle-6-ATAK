@@ -69,8 +69,10 @@
     <string name="pref_activity_radius_title">Activity Zone Radius (m)</string>
     <string name="pref_activity_radius_summary">100–1000 m. Shown as static circle on map.</string>
     <string name="pref_category_communications">Communications</string>
-    <string name="pref_chat_rooms_title">TAK Chat Rooms</string>
-    <string name="pref_chat_rooms_summary">Tap to select rooms for log messages</string>
+    <string name="pref_chat_room_name_title">Chat Room Name</string>
+    <string name="pref_chat_room_name_summary">TAK chat room where mission messages are broadcast</string>
+    <string name="pref_chat_room_name_dialog_title">Chat Room Name</string>
+    <string name="pref_error_chat_room_name_empty">Chat room name cannot be empty.</string>
 
     <!-- Settings list editor -->
     <string name="pref_breadcrumb_tools">Tool Preferences</string>

@@ -42,10 +42,12 @@
     </com.atakmap.android.gui.PanPreferenceCategory>
 
     <com.atakmap.android.gui.PanPreferenceCategory android:title="@string/pref_category_communications">
-        <com.atakmap.android.gui.PanPreference
-            android:key="pref_chat_rooms"
-            android:title="@string/pref_chat_rooms_title"
-            android:summary="@string/pref_chat_rooms_summary"/>
+        <com.atakmap.android.gui.PanEditTextPreference
+            android:key="pref_chat_room_name"
+            android:title="@string/pref_chat_room_name_title"
+            android:summary="@string/pref_chat_room_name_summary"
+            android:dialogTitle="@string/pref_chat_room_name_dialog_title"
+            android:defaultValue="uas-coordination"/>
     </com.atakmap.android.gui.PanPreferenceCategory>
 
 

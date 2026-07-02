@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.preference.Preference
 import android.widget.EditText
 import android.widget.Toast
+import com.atakmap.android.eagle6.chat.ChatRoomManager
 import com.atakmap.android.eagle6.model.Eagle6Prefs
 import com.atakmap.android.gui.PanEditTextPreference
 import com.atakmap.android.plugintemplate.plugin.R
@@ -95,15 +96,22 @@ class Eagle6PreferenceFragment : PluginPreferenceFragment {
             }
         )
 
-        setupListPref(
-            key = "pref_chat_rooms",
-            title = ps(R.string.pref_chat_rooms_title),
-            getList = { Eagle6Prefs.chatRooms },
-            saveList = { updated ->
-                Eagle6Prefs.chatRooms = updated
-                true
+        (findPreference("pref_chat_room_name") as? PanEditTextPreference)?.apply {
+            text = Eagle6Prefs.chatRoomName
+            summary = Eagle6Prefs.chatRoomName
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { pref, newVal ->
+                val name = newVal.toString().trim()
+                if (name.isEmpty()) {
+                    Toast.makeText(activity, ps(R.string.pref_error_chat_room_name_empty), Toast.LENGTH_SHORT).show()
+                    false
+                } else {
+                    Eagle6Prefs.chatRoomName = name
+                    ChatRoomManager.ensureRoom(name)
+                    pref.summary = name
+                    true
+                }
             }
-        )
+        }
 
         (findPreference("pref_launch_radius") as? PanEditTextPreference)?.apply {
             text = Eagle6Prefs.launchZoneRadiusM.toString()

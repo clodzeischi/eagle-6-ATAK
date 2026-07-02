@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.atakmap.android.cot.detail.CotDetailManager
 import com.atakmap.android.dropdown.DropDownMapComponent
+import com.atakmap.android.eagle6.chat.ChatRoomManager
 import com.atakmap.android.eagle6.cot.Eagle6DetailHandler
 import com.atakmap.android.eagle6.map.ReceivedMissionRenderer
 import com.atakmap.android.eagle6.model.Eagle6Prefs
@@ -24,6 +25,7 @@ class Eagle6MapComponent : DropDownMapComponent() {
         Eagle6Prefs.init(context)
         MissionStore.init(view.context)
         super.onCreate(context, intent, view)
+        ChatRoomManager.ensureRoom(Eagle6Prefs.chatRoomName)
         Eagle6Prefs.selfCallsign = view.selfMarker?.getMetaString("callsign", "UNKNOWN") ?: "UNKNOWN"
 
         // Drop-down receiver

@@ -8,12 +8,8 @@ class ChatSender(
     private val selfUid: String,
     private val selfCallsign: String
 ) {
-    fun sendToRooms(message: String, rooms: List<String>) {
-        if (rooms.isEmpty()) return
-        val dispatcher = CotMapComponent.getInternalDispatcher()
-        rooms.forEach { room ->
-            val xml = CotBuilder.groupChatEvent(message, room, selfUid, selfCallsign)
-            dispatcher.dispatch(CotEvent.parse(xml))
-        }
+    fun send(message: String, roomName: String) {
+        val xml = CotBuilder.groupChatEvent(message, roomName, selfUid, selfCallsign)
+        CotMapComponent.getInternalDispatcher().dispatch(CotEvent.parse(xml))
     }
 }

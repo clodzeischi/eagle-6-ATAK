@@ -53,9 +53,9 @@ object Eagle6Prefs {
             )
         } }
 
-    var chatRooms: List<String>
-        get() = getList(KEY_CHAT_ROOMS, emptyList())
-        set(value) { setList(KEY_CHAT_ROOMS, value) }
+    var chatRoomName: String
+        get() = prefs.getString(KEY_CHAT_ROOM_NAME, DEFAULT_CHAT_ROOM) ?: DEFAULT_CHAT_ROOM
+        set(value) { prefs.edit(commit = true) { putString(KEY_CHAT_ROOM_NAME, value) } }
 
     // -- Last selections: read on New Mission load, written only on Launch --
     val lastPilotIndex: Int get() = prefs.getInt(KEY_LAST_PILOT, 0)
@@ -99,7 +99,8 @@ object Eagle6Prefs {
     const val KEY_ALTITUDES = "eagle6_altitudes"
     const val KEY_LAUNCH_RADIUS = "eagle6_launch_radius"
     const val KEY_ACTIVITY_RADIUS = "eagle6_activity_radius"
-    const val KEY_CHAT_ROOMS = "eagle6_chat_rooms"
+    const val KEY_CHAT_ROOM_NAME = "eagle6_chat_room_name"
+    const val DEFAULT_CHAT_ROOM = "uas-coordination"
     private const val KEY_LAST_PILOT = "eagle6_last_pilot_idx"
     private const val KEY_LAST_PLATFORM = "eagle6_last_platform_idx"
     private const val KEY_LAST_MISSION_TYPE = "eagle6_last_mission_type_idx"
