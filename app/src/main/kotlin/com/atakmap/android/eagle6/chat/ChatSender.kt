@@ -10,6 +10,8 @@ class ChatSender(
 ) {
     fun send(message: String, roomName: String) {
         val xml = CotBuilder.groupChatEvent(message, roomName, selfUid, selfCallsign)
-        CotMapComponent.getInternalDispatcher().dispatch(CotEvent.parse(xml))
+        val event = CotEvent.parse(xml)
+        CotMapComponent.getExternalDispatcher().dispatch(event) // sends to TAK server + network
+        CotMapComponent.getInternalDispatcher().dispatch(event) // shows on local device UI
     }
 }
