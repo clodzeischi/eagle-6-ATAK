@@ -13,9 +13,14 @@ import com.atakmap.coremap.maps.coords.GeoPointMetaData
 
 class PlanningPreviewRenderer(private val mapView: MapView) {
 
-    private val R = 0x4F; private val G = 0xC3; private val B = 0xF7
+    // Ingress: light blue
+    private val IN_R = 0x4F; private val IN_G = 0xC3; private val IN_B = 0xF7
+    // Egress: amber
+    private val EG_R = 0xFF; private val EG_G = 0x98; private val EG_B = 0x00
+
     private val FILL_ALPHA = 55
-    private val ROUTE_COLOR = Color.argb(180, R, G, B)
+    private val INGRESS_ROUTE = Color.argb(180, IN_R, IN_G, IN_B)
+    private val EGRESS_ROUTE  = Color.argb(180, EG_R, EG_G, EG_B)
 
     private val rootGroup: MapGroup = DefaultMapGroup("Eagle6_Planning")
     private val overlay = DefaultMapGroupOverlay(mapView, rootGroup)
@@ -40,18 +45,21 @@ class PlanningPreviewRenderer(private val mapView: MapView) {
         rootGroup.addGroup(group)
         draftGroup = group
 
-        group.addItem(circle("e6-plan-launch", launch, launchRadiusM))
-        group.addItem(circle("e6-plan-activity", activity, activityRadiusM))
+        // Circles: launch + activity in blue, recovery in amber
+        group.addItem(circle("e6-plan-launch",    launch,   launchRadiusM,   IN_R, IN_G, IN_B))
+        group.addItem(circle("e6-plan-activity",  activity, activityRadiusM, IN_R, IN_G, IN_B))
+        group.addItem(circle("e6-plan-recovery",  recovery, launchRadiusM,   EG_R, EG_G, EG_B))
 
-        val pts = buildList {
-            add(launch)
-            addAll(infilWps)
-            add(activity)
-            addAll(exfilWps)
-            add(recovery)
+        // Ingress route: launch → infil waypoints → activity
+        val ingress = buildList { add(launch); addAll(infilWps); add(activity) }
+        ingress.forEachIndexed { i, _ ->
+            if (i < ingress.size - 1) addSegment(group, "in", i, ingress[i], ingress[i + 1], INGRESS_ROUTE)
         }
-        pts.forEachIndexed { i, _ ->
-            if (i < pts.size - 1) addSegment(group, i, pts[i], pts[i + 1])
+
+        // Egress route: activity → exfil waypoints → recovery
+        val egress = buildList { add(activity); addAll(exfilWps); add(recovery) }
+        egress.forEachIndexed { i, _ ->
+            if (i < egress.size - 1) addSegment(group, "eg", i, egress[i], egress[i + 1], EGRESS_ROUTE)
         }
     }
 
@@ -67,25 +75,25 @@ class PlanningPreviewRenderer(private val mapView: MapView) {
         draftGroup = null
     }
 
-    private fun circle(uid: String, pt: GeoPoint, radiusM: Double) =
+    private fun circle(uid: String, pt: GeoPoint, radiusM: Double, r: Int, g: Int, b: Int) =
         Circle(GeoPointMetaData.wrap(pt), radiusM, uid).apply {
-            setStrokeColor(Color.rgb(R, G, B))
-            setFillColor(Color.argb(FILL_ALPHA, R, G, B))
+            setStrokeColor(Color.rgb(r, g, b))
+            setFillColor(Color.argb(FILL_ALPHA, r, g, b))
             setStrokeWeight(2.0)
             setMetaBoolean("addToObjList", false)
         }
 
-    private fun addSegment(group: MapGroup, i: Int, from: GeoPoint, to: GeoPoint) {
-        val mFrom = Marker(GeoPointMetaData.wrap(from), "e6-pf-$i").apply {
+    private fun addSegment(group: MapGroup, prefix: String, i: Int, from: GeoPoint, to: GeoPoint, routeColor: Int) {
+        val mFrom = Marker(GeoPointMetaData.wrap(from), "e6-$prefix-f-$i").apply {
             setMetaBoolean("addToObjList", false); setMetaBoolean("nevercot", true)
         }
-        val mTo = Marker(GeoPointMetaData.wrap(to), "e6-pt-$i").apply {
+        val mTo = Marker(GeoPointMetaData.wrap(to), "e6-$prefix-t-$i").apply {
             setMetaBoolean("addToObjList", false); setMetaBoolean("nevercot", true)
         }
         group.addItem(mFrom)
         group.addItem(mTo)
-        group.addItem(Association(mFrom, mTo, "e6-pa-$i").apply {
-            setColor(ROUTE_COLOR)
+        group.addItem(Association(mFrom, mTo, "e6-$prefix-a-$i").apply {
+            setColor(routeColor)
             setStrokeWeight(2.0)
             setLink(Association.LINK_LINE)
             setStyle(Association.STYLE_DASHED)

@@ -116,7 +116,14 @@ class Eagle6DropDownReceiver(
     private val missionHistoryDetailView: MissionHistoryDetailView by lazy {
         MissionHistoryDetailView(
             pluginContext = pluginContext,
-            onBack = { onBackButtonPressed() }
+            onBack = { onBackButtonPressed() },
+            onPreviewUpdate = { launch, infilWps, activity, exfilWps, recovery ->
+                planningRenderer.update(
+                    launch, infilWps, activity, exfilWps, recovery,
+                    Eagle6Prefs.launchZoneRadiusM.toDouble(),
+                    Eagle6Prefs.activityZoneRadiusM.toDouble()
+                )
+            }
         )
     }
 

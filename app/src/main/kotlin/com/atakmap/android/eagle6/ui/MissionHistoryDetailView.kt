@@ -8,10 +8,12 @@ import com.atak.plugins.impl.PluginLayoutInflater
 import com.atakmap.android.eagle6.cot.MessageFormatter
 import com.atakmap.android.eagle6.model.Mission
 import com.atakmap.android.plugintemplate.plugin.R
+import com.atakmap.coremap.maps.coords.GeoPoint
 
 class MissionHistoryDetailView(
     private val pluginContext: Context,
-    private val onBack: () -> Unit
+    private val onBack: () -> Unit,
+    private val onPreviewUpdate: (GeoPoint, List<GeoPoint>, GeoPoint, List<GeoPoint>, GeoPoint) -> Unit = { _, _, _, _, _ -> }
 ) {
     val view: View = PluginLayoutInflater.inflate(pluginContext, R.layout.eagle6_mission_history_detail, null)
 
@@ -35,5 +37,10 @@ class MissionHistoryDetailView(
             MessageFormatter.toMgrs(mission.recoveryLocation)
         view.findViewById<TextView>(R.id.history_altitude).text = "${mission.altitudeFt}'"
         view.findViewById<TextView>(R.id.history_duration).text = "${mission.expectedDurationMin} min"
+        onPreviewUpdate(
+            mission.launchLocation, mission.infilWaypoints,
+            mission.activityLocation, mission.exfilWaypoints,
+            mission.recoveryLocation
+        )
     }
 }
